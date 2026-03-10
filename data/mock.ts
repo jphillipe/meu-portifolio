@@ -345,6 +345,7 @@ const COMMENTS_KEY = 'devfolio_comments'
 const VIEWS_KEY = 'devfolio_views'
 
 export const initializeStorage = (): void => {
+  if (typeof window === 'undefined') return
   if (!localStorage.getItem(PROJECTS_KEY)) {
     localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects))
   }
@@ -360,6 +361,7 @@ export const initializeStorage = (): void => {
 }
 
 export const getStoredProjects = (): Project[] => {
+  if (typeof window === 'undefined') return [...projects]
   const stored = localStorage.getItem(PROJECTS_KEY)
   if (!stored) {
     initializeStorage()
@@ -376,17 +378,22 @@ export const saveProjectToStorage = (project: Project): Project[] => {
   } else {
     allProjects.push(project)
   }
-  localStorage.setItem(PROJECTS_KEY, JSON.stringify(allProjects))
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(PROJECTS_KEY, JSON.stringify(allProjects))
+  }
   return allProjects
 }
 
 export const deleteProjectFromStorage = (id: string): Project[] => {
   const allProjects = getStoredProjects().filter((p) => p.id !== id)
-  localStorage.setItem(PROJECTS_KEY, JSON.stringify(allProjects))
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(PROJECTS_KEY, JSON.stringify(allProjects))
+  }
   return allProjects
 }
 
 export const toggleLike = (projectId: string): string[] => {
+  if (typeof window === 'undefined') return []
   const likes: string[] = JSON.parse(localStorage.getItem(LIKES_KEY) || '[]')
   const idx = likes.indexOf(projectId)
   if (idx >= 0) {
@@ -399,11 +406,13 @@ export const toggleLike = (projectId: string): string[] => {
 }
 
 export const isLiked = (projectId: string): boolean => {
+  if (typeof window === 'undefined') return false
   const likes: string[] = JSON.parse(localStorage.getItem(LIKES_KEY) || '[]')
   return likes.includes(projectId)
 }
 
 export const getComments = (projectId: string): Comment[] => {
+  if (typeof window === 'undefined') return []
   const comments: Record<string, Comment[]> = JSON.parse(
     localStorage.getItem(COMMENTS_KEY) || '{}',
   )
@@ -411,6 +420,7 @@ export const getComments = (projectId: string): Comment[] => {
 }
 
 export const addComment = (projectId: string, comment: Comment): Comment[] => {
+  if (typeof window === 'undefined') return []
   const comments: Record<string, Comment[]> = JSON.parse(
     localStorage.getItem(COMMENTS_KEY) || '{}',
   )
@@ -421,6 +431,7 @@ export const addComment = (projectId: string, comment: Comment): Comment[] => {
 }
 
 export const incrementViews = (projectId: string): number => {
+  if (typeof window === 'undefined') return 0
   const views: Record<string, number> = JSON.parse(
     localStorage.getItem(VIEWS_KEY) || '{}',
   )
@@ -430,6 +441,7 @@ export const incrementViews = (projectId: string): number => {
 }
 
 export const getExtraViews = (projectId: string): number => {
+  if (typeof window === 'undefined') return 0
   const views: Record<string, number> = JSON.parse(
     localStorage.getItem(VIEWS_KEY) || '{}',
   )

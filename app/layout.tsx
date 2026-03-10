@@ -18,8 +18,8 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Alex Chen | Full Stack Engineer',
-  description: 'Portfólio de Alex Chen',
+  title: 'J.Phillipe | Full Stack Engineer',
+  description: 'Portfólio de J.Phillipe',
 }
 
 export default function RootLayout({
