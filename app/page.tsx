@@ -1,4 +1,5 @@
 import { About } from '@/components/pages/home/about'
+import { Experience } from '@/components/pages/home/experience'
 import { Featured } from '@/components/pages/home/featured'
 import Hero from '@/components/pages/home/hero'
 import { Tech } from '@/components/pages/home/tech'
@@ -14,6 +15,7 @@ export default function Home() {
       <Separator className="max-w-6xl mx-auto bg-zinc-800/50" />
       <Tech />
       <Separator className="max-w-6xl mx-auto bg-zinc-800/50" />
+      <Experience />
     </div>
   )
 }

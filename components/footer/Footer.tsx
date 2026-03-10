@@ -1,9 +1,10 @@
 import React, { ComponentType } from 'react'
-import { Heart, Terminal, Mail, Linkedin } from 'lucide-react'
+import { Terminal, Mail, Linkedin } from 'lucide-react'
 import { SiGithub } from '@icons-pack/react-simple-icons'
 import { Separator } from '../ui/separator'
 import Link from 'next/link'
 import { developerProfile } from '@/data/mock'
+import { TitanEasterEgg } from '../easter-egg/TitanEasterEgg'
 
 interface SocialLink {
   icon: ComponentType<{ className?: string }>
@@ -93,11 +94,7 @@ const Footer: React.FC = () => {
             &copy; {new Date().getFullYear()} {developerProfile.name}. All
             rights reserved.
           </p>
-          <p className="text-xs text-zinc-600 flex items-center gap-1">
-            Built with{' '}
-            <Heart className="h-3 w-3 text-[#F2A900]" fill="currentColor" />{' '}
-            using React & Tailwind CSS
-          </p>
+          <TitanEasterEgg />
         </div>
       </div>
     </footer>

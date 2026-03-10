@@ -56,32 +56,25 @@ export const techStack: TechItem[] = [
 
 export const experience: ExperienceItem[] = [
   {
-    title: 'Senior Full Stack Engineer',
-    company: 'Vercel',
-    period: '2022 - Present',
-    description:
-      'Leading development of internal deployment tools and edge infrastructure. Shipped features used by 100k+ developers.',
+    title: 'Front-End Developer',
+    company: 'Blue - Health Insurance',
+    period: 'Jul/2024 - Present',
+    description: [
+      'Development and maintenance of administrative panels and internal portals for managing proposals, contracts, and documents in the health sector, optimizing internal team workflows.',
+      'Implementation of responsive and scalable interfaces using React, Next.js, TypeScript, and Tailwind CSS, resulting in improved application performance and user experience.',
+      'Collaboration in agile squads with product, design, and back-end teams to deliver new features and ensure efficient API integration.',
+      'Active contribution to code quality through the application of best practices, refactoring, and maintaining consistency, aiming for system performance and scalability.',
+    ],
   },
   {
-    title: 'Full Stack Engineer',
-    company: 'Stripe',
-    period: '2020 - 2022',
-    description:
-      'Built payment processing dashboards and developer APIs. Improved checkout conversion by 15%.',
-  },
-  {
-    title: 'Frontend Engineer',
-    company: 'GitHub',
-    period: '2019 - 2020',
-    description:
-      'Contributed to GitHub Actions UI and repository management features. Worked on accessibility improvements.',
-  },
-  {
-    title: 'Junior Developer',
-    company: 'Startup Lab',
-    period: '2018 - 2019',
-    description:
-      'Full-stack development for early-stage startups. Built MVPs for 3 companies that secured Series A funding.',
+    title: 'Director of External Relations & Front-End Manager',
+    company: 'TITAN - Junior Enterprise of Computer Engineering at UFBA',
+    period: 'Sep/2023 - Present',
+    description: [
+      'Front-End lead in the development of web projects, such as institutional websites and landing pages for events, using HTML, CSS, JavaScript, React, and Next.js.',
+      'Team leadership and project coordination, serving as President and Director of External Relations, defining the organizational structure and strategic planning.',
+      'Institutional representation of the company with partners, university departments, and in the Junior Enterprise Movement, strengthening the brand and establishing new strategic partnerships.',
+    ],
   },
 ]
 

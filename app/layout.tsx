@@ -5,6 +5,7 @@ import { AuthProvider } from '@/context/AuthContext'
 import Navbar from '@/components/navbar/Navbar'
 import Footer from '@/components/footer/Footer'
 import { Toaster } from '@/components/ui/sonner'
+import { TitanConsoleEgg } from '@/components/easter-egg/TitanConsoleEgg'
 
 const inter = Inter({
   variable: '--font-inter',
@@ -38,6 +39,7 @@ export default function RootLayout({
           <Navbar />
           <main className="pt-16">{children}</main>
           <Footer />
+          <TitanConsoleEgg />
           <Toaster position="bottom-right" />
         </AuthProvider>
       </body>
