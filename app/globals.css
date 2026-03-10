@@ -64,6 +64,8 @@
   --animate-float-3: float-3 ease-in-out infinite;
   --animate-shimmer: shimmer 3s linear infinite;
   --animate-blink: blink-cursor 1s step-end infinite;
+  --animate-pulse-glow: pulse-glow 4s ease-in-out infinite;
+  --animate-pulse-glow-delayed: pulse-glow 4s ease-in-out 2s infinite;
 
   @keyframes fade-in-up {
     from { opacity: 0; transform: translateY(20px); }
@@ -107,6 +109,16 @@
   @keyframes shine-sweep {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(200%); }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { 
+      opacity: 0.6; 
+      transform: scale(1);
+    }
+    50% { 
+      opacity: 1; 
+      transform: scale(1.08);
+    }
   }
 }
 

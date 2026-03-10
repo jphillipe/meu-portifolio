@@ -1,18 +1,12 @@
-import React from 'react'
-import {
-  Github,
-  Linkedin,
-  Twitter,
-  Heart,
-  Terminal,
-  LucideIcon,
-} from 'lucide-react'
+import React, { ComponentType } from 'react'
+import { Heart, Terminal, Mail, Linkedin } from 'lucide-react'
+import { SiGithub } from '@icons-pack/react-simple-icons'
 import { Separator } from '../ui/separator'
 import Link from 'next/link'
 import { developerProfile } from '@/data/mock'
 
 interface SocialLink {
-  icon: LucideIcon
+  icon: ComponentType<{ className?: string }>
   href: string
   label: string
 }
@@ -20,7 +14,7 @@ interface SocialLink {
 const Footer: React.FC = () => {
   const socialLinks: SocialLink[] = [
     {
-      icon: Github,
+      icon: SiGithub,
       href: developerProfile.socialLinks.github,
       label: 'GitHub',
     },
@@ -29,11 +23,7 @@ const Footer: React.FC = () => {
       href: developerProfile.socialLinks.linkedin,
       label: 'LinkedIn',
     },
-    {
-      icon: Twitter,
-      href: developerProfile.socialLinks.twitter,
-      label: 'Twitter',
-    },
+    { icon: Mail, href: `mailto:${developerProfile.email}`, label: 'Email' },
   ]
 
   return (

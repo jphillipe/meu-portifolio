@@ -11,7 +11,6 @@ export interface DeveloperProfile {
   socialLinks: {
     github: string
     linkedin: string
-    twitter: string
   }
 }
 

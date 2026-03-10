@@ -22,19 +22,18 @@ const projectImages: Record<string, string> = {
 }
 
 export const developerProfile: DeveloperProfile = {
-  name: 'Alex Chen',
+  name: 'J.Phillipe Fernandes',
   title: 'Full Stack Engineer',
   tagline: 'Building elegant solutions to complex problems',
   bio: 'Passionate full-stack engineer with 6+ years of experience crafting high-performance applications. I specialize in React, Node.js, and cloud architecture, with a focus on developer tooling and AI-powered applications. Previously at Vercel and Stripe.',
-  location: 'San Francisco, CA',
-  email: 'alex@alexchen.dev',
-  yearsOfExperience: 6,
+  location: 'Salvador, BA, Brazil',
+  email: 'fernandesjoaophillipe@gmail.com',
+  yearsOfExperience: 2,
   projectsCompleted: 32,
   githubContributions: 2847,
   socialLinks: {
-    github: 'https://github.com',
-    linkedin: 'https://linkedin.com',
-    twitter: 'https://twitter.com',
+    github: 'https://github.com/jphillipe',
+    linkedin: 'https://linkedin.com/in/jphillipefernandes/',
   },
 }
 
