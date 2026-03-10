@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
             <Terminal className="h-4 w-4 text-zinc-900" />
           </div>
           <span className="font-semibold text-zinc-50 text-sm tracking-tight hidden sm:block">
-            Alex Chen
+            J.Phillipe
           </span>
         </Link>
 

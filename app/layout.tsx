@@ -31,8 +31,9 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       className={`${inter.variable} ${jetbrainsMono.variable} dark`}
+      suppressHydrationWarning
     >
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased bg-background ">
         <AuthProvider>
           <Navbar />
           <main className="pt-16">{children}</main>

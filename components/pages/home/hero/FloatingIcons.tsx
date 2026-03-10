@@ -39,9 +39,6 @@ interface FloatingItem {
   size: string
   iconSize: string
   opacity: number
-  anim: string
-  dur: string
-  delay: string
   color?: string
   bg?: string
   border?: string
@@ -55,11 +52,8 @@ const items: FloatingItem[] = [
     left: '6%',
     size: 'w-14 h-14',
     iconSize: 'text-sm',
-    opacity: 0.18,
-    anim: 'animate-float-1',
-    dur: '14s',
-    delay: '0s',
-    color: 'text-emerald-400/50',
+    opacity: 0.55,
+    color: 'text-emerald-400',
   },
   {
     icon: Code2,
@@ -67,10 +61,7 @@ const items: FloatingItem[] = [
     left: '82%',
     size: 'w-12 h-12',
     iconSize: 'w-5 h-5',
-    opacity: 0.15,
-    anim: 'animate-float-3',
-    dur: '12s',
-    delay: '1s',
+    opacity: 0.45,
   },
   {
     icon: Terminal,
@@ -78,10 +69,7 @@ const items: FloatingItem[] = [
     left: '8%',
     size: 'w-11 h-11',
     iconSize: 'w-5 h-5',
-    opacity: 0.12,
-    anim: 'animate-float-2',
-    dur: '16s',
-    delay: '3s',
+    opacity: 0.4,
   },
   {
     icon: GitBranch,
@@ -89,10 +77,7 @@ const items: FloatingItem[] = [
     left: '92%',
     size: 'w-10 h-10',
     iconSize: 'w-4 h-4',
-    opacity: 0.1,
-    anim: 'animate-float-1',
-    dur: '18s',
-    delay: '0.5s',
+    opacity: 0.35,
     hideOnMobile: true,
   },
   {
@@ -101,10 +86,7 @@ const items: FloatingItem[] = [
     left: '72%',
     size: 'w-10 h-10',
     iconSize: 'w-4 h-4',
-    opacity: 0.09,
-    anim: 'animate-float-3',
-    dur: '13s',
-    delay: '4s',
+    opacity: 0.32,
   },
   {
     icon: Globe,
@@ -112,10 +94,7 @@ const items: FloatingItem[] = [
     left: '55%',
     size: 'w-11 h-11',
     iconSize: 'w-5 h-5',
-    opacity: 0.08,
-    anim: 'animate-float-2',
-    dur: '17s',
-    delay: '2.5s',
+    opacity: 0.3,
     hideOnMobile: true,
   },
   {
@@ -124,10 +103,7 @@ const items: FloatingItem[] = [
     left: '4%',
     size: 'w-12 h-12',
     iconSize: 'w-5 h-5',
-    opacity: 0.13,
-    anim: 'animate-float-1',
-    dur: '11s',
-    delay: '1.5s',
+    opacity: 0.42,
     hideOnMobile: true,
   },
   {
@@ -136,10 +112,7 @@ const items: FloatingItem[] = [
     left: '14%',
     size: 'w-9 h-9',
     iconSize: 'w-4 h-4',
-    opacity: 0.14,
-    anim: 'animate-float-3',
-    dur: '10s',
-    delay: '0.8s',
+    opacity: 0.48,
   },
   {
     icon: Cpu,
@@ -147,10 +120,7 @@ const items: FloatingItem[] = [
     left: '90%',
     size: 'w-10 h-10',
     iconSize: 'w-4 h-4',
-    opacity: 0.09,
-    anim: 'animate-float-2',
-    dur: '19s',
-    delay: '3.5s',
+    opacity: 0.32,
     hideOnMobile: true,
   },
   {
@@ -159,10 +129,7 @@ const items: FloatingItem[] = [
     left: '38%',
     size: 'w-9 h-9',
     iconSize: 'w-4 h-4',
-    opacity: 0.08,
-    anim: 'animate-float-1',
-    dur: '15s',
-    delay: '5s',
+    opacity: 0.28,
   },
   {
     icon: FileCode2,
@@ -170,10 +137,7 @@ const items: FloatingItem[] = [
     left: '38%',
     size: 'w-10 h-10',
     iconSize: 'w-4 h-4',
-    opacity: 0.07,
-    anim: 'animate-float-3',
-    dur: '16s',
-    delay: '1.2s',
+    opacity: 0.28,
     hideOnMobile: true,
   },
   {
@@ -182,11 +146,8 @@ const items: FloatingItem[] = [
     left: '88%',
     size: 'w-14 h-14',
     iconSize: 'text-sm',
-    opacity: 0.1,
-    anim: 'animate-float-2',
-    dur: '20s',
-    delay: '2s',
-    color: 'text-amber-400/40',
+    opacity: 0.38,
+    color: 'text-amber-400',
     hideOnMobile: true,
   },
   {
@@ -195,11 +156,8 @@ const items: FloatingItem[] = [
     left: '52%',
     size: 'w-9 h-9',
     iconSize: 'text-xs',
-    opacity: 0.11,
-    anim: 'animate-float-1',
-    dur: '14s',
-    delay: '6s',
-    color: 'text-purple-400/40',
+    opacity: 0.35,
+    color: 'text-purple-400',
   },
 ]
 
@@ -348,19 +306,19 @@ export const FloatingIcons = () => {
           }}
         >
           <motion.div
-            className={`${item.size} rounded-xl ${item.bg || 'bg-zinc-800/20'} ${item.border || 'border border-zinc-700/10'} backdrop-blur-sm flex items-center justify-center`}
-            whileHover={{ scale: 1.1, opacity: item.opacity * 2 }}
+            className={`${item.size} rounded-xl ${item.bg || 'bg-zinc-800/40'} ${item.border || 'border border-zinc-600/30'} backdrop-blur-sm flex items-center justify-center`}
+            whileHover={{ scale: 1.15, opacity: 0.9 }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
             {item.text ? (
               <span
-                className={`font-mono font-bold ${item.iconSize} ${item.color || 'text-zinc-400'}`}
+                className={`font-mono font-bold ${item.iconSize} ${item.color || 'text-zinc-200'}`}
               >
                 {item.text}
               </span>
             ) : item.icon ? (
               <item.icon
-                className={`${item.iconSize} ${item.color || 'text-zinc-400'}`}
+                className={`${item.iconSize} ${item.color || 'text-zinc-200'}`}
               />
             ) : null}
           </motion.div>
@@ -373,7 +331,7 @@ export const FloatingIcons = () => {
         style={{ top: '15%', left: '22%' }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{
-          opacity: 0.2,
+          opacity: 0.55,
           y: [0, -25, 0],
           x: [0, 8, 0],
           rotate: [0, 5, 0],
@@ -386,11 +344,11 @@ export const FloatingIcons = () => {
         }}
       >
         <motion.div
-          className="w-14 h-14 rounded-xl bg-cyan-500/5 border border-cyan-400/10 backdrop-blur-sm flex items-center justify-center"
-          whileHover={{ scale: 1.15, opacity: 0.4 }}
+          className="w-14 h-14 rounded-xl bg-cyan-500/15 border border-cyan-400/35 backdrop-blur-sm flex items-center justify-center"
+          whileHover={{ scale: 1.15, opacity: 0.9 }}
           transition={{ type: 'spring', stiffness: 300 }}
         >
-          <ReactLogo className="w-7 h-7 text-cyan-400/70" />
+          <ReactLogo className="w-7 h-7 text-cyan-400" />
         </motion.div>
       </motion.div>
 
@@ -400,7 +358,7 @@ export const FloatingIcons = () => {
         style={{ top: '52%', left: '78%' }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{
-          opacity: 0.2,
+          opacity: 0.55,
           y: [0, -18, 0],
           x: [0, -12, 0],
           rotate: [0, -4, 0],
@@ -418,11 +376,11 @@ export const FloatingIcons = () => {
         }}
       >
         <motion.div
-          className="w-11 h-11 rounded-xl bg-blue-500/8 border border-blue-400/10 backdrop-blur-sm flex items-center justify-center"
-          whileHover={{ scale: 1.15, opacity: 0.4 }}
+          className="w-11 h-11 rounded-xl bg-blue-500/15 border border-blue-400/35 backdrop-blur-sm flex items-center justify-center"
+          whileHover={{ scale: 1.15, opacity: 0.9 }}
           transition={{ type: 'spring', stiffness: 300 }}
         >
-          <span className="text-blue-400/80 text-xs font-extrabold font-mono">
+          <span className="text-blue-400 text-xs font-extrabold font-mono">
             TS
           </span>
         </motion.div>
@@ -434,7 +392,7 @@ export const FloatingIcons = () => {
         style={{ top: '75%', left: '22%' }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{
-          opacity: 0.18,
+          opacity: 0.5,
           y: [0, -22, 0],
           x: [0, 10, 0],
           rotate: [0, 3, 0],
@@ -447,11 +405,11 @@ export const FloatingIcons = () => {
         }}
       >
         <motion.div
-          className="w-10 h-10 rounded-xl bg-yellow-500/8 border border-yellow-400/10 backdrop-blur-sm flex items-center justify-center"
-          whileHover={{ scale: 1.15, opacity: 0.35 }}
+          className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-400/35 backdrop-blur-sm flex items-center justify-center"
+          whileHover={{ scale: 1.15, opacity: 0.9 }}
           transition={{ type: 'spring', stiffness: 300 }}
         >
-          <span className="text-yellow-400/80 text-xs font-extrabold font-mono">
+          <span className="text-yellow-400 text-xs font-extrabold font-mono">
             JS
           </span>
         </motion.div>
@@ -463,7 +421,7 @@ export const FloatingIcons = () => {
         style={{ top: '35%', left: '70%' }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{
-          opacity: 0.15,
+          opacity: 0.45,
           y: [0, -20, 0],
           x: [0, -8, 0],
           rotate: [0, -3, 0],
@@ -481,11 +439,11 @@ export const FloatingIcons = () => {
         }}
       >
         <motion.div
-          className="w-10 h-10 rounded-xl bg-pink-500/8 border border-pink-400/10 backdrop-blur-sm flex items-center justify-center"
-          whileHover={{ scale: 1.15, opacity: 0.3 }}
+          className="w-10 h-10 rounded-xl bg-pink-500/15 border border-pink-400/35 backdrop-blur-sm flex items-center justify-center"
+          whileHover={{ scale: 1.15, opacity: 0.9 }}
           transition={{ type: 'spring', stiffness: 300 }}
         >
-          <span className="text-pink-400/80 text-xs font-extrabold font-mono">
+          <span className="text-pink-400 text-xs font-extrabold font-mono">
             #
           </span>
         </motion.div>
