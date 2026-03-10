@@ -94,8 +94,9 @@ const Footer: React.FC = () => {
             rights reserved.
           </p>
           <p className="text-xs text-zinc-600 flex items-center gap-1">
-            Built with <Heart className="h-3 w-3 text-red-400/60" /> using React
-            & Tailwind CSS
+            Built with{' '}
+            <Heart className="h-3 w-3 text-[#F2A900]" fill="currentColor" />{' '}
+            using React & Tailwind CSS
           </p>
         </div>
       </div>

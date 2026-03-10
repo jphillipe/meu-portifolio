@@ -1,6 +1,7 @@
 import { About } from '@/components/pages/home/about'
 import { Featured } from '@/components/pages/home/featured'
 import Hero from '@/components/pages/home/hero'
+import { Tech } from '@/components/pages/home/tech'
 import { Separator } from '@/components/ui/separator'
 
 export default function Home() {
@@ -10,6 +11,9 @@ export default function Home() {
       <About />
       <Separator className="max-w-6xl mx-auto bg-zinc-800/50" />
       <Featured />
+      <Separator className="max-w-6xl mx-auto bg-zinc-800/50" />
+      <Tech />
+      <Separator className="max-w-6xl mx-auto bg-zinc-800/50" />
     </div>
   )
 }

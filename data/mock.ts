@@ -38,22 +38,20 @@ export const developerProfile: DeveloperProfile = {
 }
 
 export const techStack: TechItem[] = [
+  { name: 'HTML', category: 'Frontend' },
+  { name: 'CSS', category: 'Frontend' },
   { name: 'React', category: 'Frontend' },
+  { name: 'JavaScript', category: 'Language' },
   { name: 'TypeScript', category: 'Language' },
   { name: 'Next.js', category: 'Framework' },
   { name: 'Node.js', category: 'Backend' },
-  { name: 'Python', category: 'Language' },
-  { name: 'Go', category: 'Language' },
+  { name: 'Express', category: 'Backend' },
+  { name: 'Nest', category: 'Backend' },
   { name: 'PostgreSQL', category: 'Database' },
   { name: 'MongoDB', category: 'Database' },
-  { name: 'Redis', category: 'Cache' },
   { name: 'Docker', category: 'DevOps' },
   { name: 'AWS', category: 'Cloud' },
-  { name: 'GraphQL', category: 'API' },
   { name: 'Tailwind CSS', category: 'Styling' },
-  { name: 'Kubernetes', category: 'DevOps' },
-  { name: 'TensorFlow', category: 'AI/ML' },
-  { name: 'FastAPI', category: 'Backend' },
 ]
 
 export const experience: ExperienceItem[] = [
