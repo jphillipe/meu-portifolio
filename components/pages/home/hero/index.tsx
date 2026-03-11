@@ -54,8 +54,10 @@ export default function Hero() {
         </div>
 
         <p className="animate-fade-in-up animation-delay-300 text-base sm:text-lg text-zinc-500 max-w-2xl mx-auto mb-8 leading-relaxed">
-          {developerProfile.tagline}. Specializing in React, Node.js, and cloud
-          architecture.
+          {developerProfile.tagline}
+          <span className="hidden sm:inline">
+            . Specializing in React, Node.js, and cloud architecture.
+          </span>
         </p>
 
         {/* Social */}
@@ -75,17 +77,20 @@ export default function Hero() {
         </div>
 
         {/* CTAs */}
-        <div className="animate-fade-in-up animation-delay-500 flex items-center justify-center gap-4">
-          <Link href="/projects">
-            <Button className="bg-white text-zinc-900 hover:bg-zinc-200 font-medium px-6 h-11 text-sm group">
+        <div className="animate-fade-in-up animation-delay-500 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+          <Link href="/projects" className="w-full sm:w-auto">
+            <Button className="w-full sm:w-auto bg-white text-zinc-900 hover:bg-zinc-200 font-medium px-6 h-11 text-sm group">
               View Projects{' '}
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>
-          <a href={`mailto:${developerProfile.email}`}>
+          <a
+            href={`mailto:${developerProfile.email}`}
+            className="w-full sm:w-auto"
+          >
             <Button
               variant="outline"
-              className="border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100 font-medium px-6 h-11 text-sm"
+              className="w-full sm:w-auto border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100 font-medium px-6 h-11 text-sm"
             >
               Get in Touch
             </Button>

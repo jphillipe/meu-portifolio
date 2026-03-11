@@ -62,6 +62,7 @@ const items: FloatingItem[] = [
     size: 'w-12 h-12',
     iconSize: 'w-5 h-5',
     opacity: 0.45,
+    hideOnMobile: true,
   },
   {
     icon: Terminal,
@@ -113,6 +114,7 @@ const items: FloatingItem[] = [
     size: 'w-9 h-9',
     iconSize: 'w-4 h-4',
     opacity: 0.48,
+    hideOnMobile: true,
   },
   {
     icon: Cpu,
@@ -158,6 +160,7 @@ const items: FloatingItem[] = [
     iconSize: 'text-xs',
     opacity: 0.35,
     color: 'text-purple-400',
+    hideOnMobile: true,
   },
 ]
 
@@ -177,7 +180,7 @@ export const FloatingIcons = () => {
   }, [])
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-75 sm:opacity-100">
       {/* Dot grid */}
       <div className="absolute inset-0 dot-grid" />
 
@@ -327,8 +330,8 @@ export const FloatingIcons = () => {
 
       {/* React Logo - special colored */}
       <motion.div
-        className="absolute hidden md:block"
-        style={{ top: '15%', left: '22%' }}
+        className="absolute block"
+        style={{ top: '8%', left: '40%' }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{
           opacity: 0.55,
@@ -354,8 +357,8 @@ export const FloatingIcons = () => {
 
       {/* TS badge */}
       <motion.div
-        className="absolute hidden md:block"
-        style={{ top: '52%', left: '78%' }}
+        className="absolute block"
+        style={{ top: '8%', left: '76%' }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{
           opacity: 0.55,
