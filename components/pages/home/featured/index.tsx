@@ -1,14 +1,12 @@
 'use client'
-import { getStoredProjects } from '@/data/mock'
+import { projects } from '@/data/mock'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { ProjectCard } from './card'
 import { motion } from 'framer-motion'
 
 export const Featured = () => {
-  const featuredProjects = getStoredProjects()
-    .filter((p) => p.featured)
-    .slice(0, 4)
+  const featuredProjects = projects.filter((p) => p.featured).slice(0, 4)
   return (
     <section className="py-24 px-6">
       <div className="max-w-6xl mx-auto">

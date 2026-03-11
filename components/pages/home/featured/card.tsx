@@ -2,7 +2,6 @@
 
 import { Github, ExternalLink, Eye, Heart, Star } from 'lucide-react'
 import { Project } from '@/types'
-import { getExtraViews, isLiked } from '@/data/mock'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
@@ -14,10 +13,8 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ project }: ProjectCardProps) => {
-  const liked = isLiked(project.id)
-  const extraViews = getExtraViews(project.id)
-  const totalViews = project.views + extraViews
-  const totalLikes = project.likes + (liked ? 1 : 0)
+  const totalViews = project.views
+  const totalLikes = project.likes
   const shineControls = useAnimation()
 
   const handleHoverStart = async () => {
@@ -115,12 +112,8 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 <Eye className="h-3.5 w-3.5" />
                 {totalViews.toLocaleString()}
               </span>
-              <span
-                className={`flex items-center gap-1.5 transition-colors ${liked ? 'text-red-400' : 'group-hover:text-zinc-400'}`}
-              >
-                <Heart
-                  className={`h-3.5 w-3.5 ${liked ? 'fill-current' : ''}`}
-                />
+              <span className="flex items-center gap-1.5 group-hover:text-zinc-400 transition-colors">
+                <Heart className="h-3.5 w-3.5" />
                 {totalLikes}
               </span>
               <span className="flex items-center gap-1.5 group-hover:text-zinc-400 transition-colors">

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import { AuthProvider } from '@/context/AuthContext'
 import Navbar from '@/components/navbar/Navbar'
 import Footer from '@/components/footer/Footer'
 import { Toaster } from '@/components/ui/sonner'
@@ -35,13 +34,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-sans antialiased bg-background ">
-        <AuthProvider>
-          <Navbar />
-          <main className="pt-16">{children}</main>
-          <Footer />
-          <TitanConsoleEgg />
-          <Toaster position="bottom-right" />
-        </AuthProvider>
+        <Navbar />
+        <main className="pt-16">{children}</main>
+        <Footer />
+        <TitanConsoleEgg />
+        <Toaster position="bottom-right" />
       </body>
     </html>
   )
