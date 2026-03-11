@@ -3,7 +3,6 @@ import type {
   TechItem,
   ExperienceItem,
   Project,
-  Comment,
 } from '../types'
 
 const projectImages: Record<string, string> = {
