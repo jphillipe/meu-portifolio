@@ -7,9 +7,11 @@ import { zfd } from 'zod-form-data'
 import { actionClient } from '@/lib/safe-action'
 
 const loginSchema = zfd.formData({
-  email: zfd.text(z.email({ message: 'Informe um email válido' })),
+  email: zfd.text(z.email({ error: 'Informe um email válido' })),
   password: zfd.text(
-    z.string().min(6, { message: 'Senha deve ter no mínimo 6 caracteres' }),
+    z
+      .string({ error: 'Senha é obrigatória' })
+      .min(6, { message: 'Senha deve ter no mínimo 6 caracteres' }),
   ),
 })
 
