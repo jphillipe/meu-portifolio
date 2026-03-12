@@ -13,20 +13,45 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { createProjectAction } from '../_actions/addProjectAction'
+import { useAction } from 'next-safe-action/hooks'
+import { Loader2 } from 'lucide-react'
+import { toast } from 'sonner'
+import { useRef } from 'react'
 
 export function ProjectForm() {
   const inputClass =
     'bg-zinc-800/50 border-zinc-700 text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600'
   const MOCK_CATEGORIES = ['Front-end', 'Back-end', 'Full Stack', 'Mobile']
 
+  const formRef = useRef<HTMLFormElement>(null)
+
+  const { executeAsync, result, isPending } = useAction(createProjectAction)
+
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+
+    const toastId = toast.loading('Salvando projeto no banco de dados...')
+    const response = await executeAsync(formData)
+
+    if (response?.data?.success) {
+      toast.success('Projeto criado com sucesso! 🚀', { id: toastId })
+      formRef.current?.reset()
+    } else {
+      toast.error('Erro ao salvar. Verifique os campos em vermelho.', {
+        id: toastId,
+      })
+    }
+  }
+
   return (
-    // No futuro, isso será substituído por <form action={suaActionAqui}>
-    <form>
+    <form ref={formRef} onSubmit={handleSubmit}>
       <div className="rounded-xl border border-zinc-800/50 bg-zinc-900/20 p-6 space-y-6">
         <h2 className="text-lg font-semibold text-zinc-100">Novo Projeto</h2>
         <Separator className="bg-zinc-800/50" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-2">
             <Label htmlFor="title" className="text-zinc-400 text-sm">
               Título *
@@ -36,8 +61,12 @@ export function ProjectForm() {
               name="title"
               placeholder="Nome do projeto"
               className={inputClass}
-              required
             />
+            {result.validationErrors?.title && (
+              <p className="text-xs text-red-500 mt-1">
+                {result.validationErrors.title._errors}
+              </p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="category" className="text-zinc-400 text-sm">
@@ -62,58 +91,44 @@ export function ProjectForm() {
                 ))}
               </SelectContent>
             </Select>
+            {result.validationErrors?.category && (
+              <p className="text-xs text-red-500 mt-1">
+                {result.validationErrors.category._errors}
+              </p>
+            )}
           </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="shortDescription" className="text-zinc-400 text-sm">
-            Descrição Curta *
-          </Label>
-          <Textarea
-            id="shortDescription"
-            name="shortDescription"
-            placeholder="Breve descrição"
-            className={`${inputClass} min-h-20 resize-none`}
-            required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="fullDescription" className="text-zinc-400 text-sm">
-            Descrição Completa
-          </Label>
-          <Textarea
-            id="fullDescription"
-            name="fullDescription"
-            placeholder="Descrição detalhada"
-            className={`${inputClass} min-h-30 resize-none`}
-          />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <Label htmlFor="techStack" className="text-zinc-400 text-sm">
               Tech Stack (separado por vírgula)
             </Label>
             <Input
-              id="techStack"
-              name="techStack"
+              id="tags"
+              name="tags"
               placeholder="React, Node.js, PostgreSQL"
               className={inputClass}
             />
+            {result.validationErrors?.tags && (
+              <p className="text-xs text-red-500 mt-1">
+                {result.validationErrors.tags._errors}
+              </p>
+            )}
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="year" className="text-zinc-400 text-sm">
-              Ano
-            </Label>
-            <Input
-              id="year"
-              name="year"
-              type="number"
-              defaultValue={new Date().getFullYear()}
-              className={inputClass}
-            />
-          </div>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="description" className="text-zinc-400 text-sm">
+            Descrição
+          </Label>
+          <Textarea
+            id="description"
+            name="description"
+            placeholder="Descrição detalhada"
+            className={`${inputClass} min-h-30 resize-none`}
+          />
+          {result.validationErrors?.description && (
+            <p className="text-xs text-red-500 mt-1">
+              {result.validationErrors.description._errors}
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -122,11 +137,16 @@ export function ProjectForm() {
               GitHub URL
             </Label>
             <Input
-              id="githubUrl"
-              name="githubUrl"
+              id="repoUrl"
+              name="repoUrl"
               placeholder="https://github.com/..."
               className={inputClass}
             />
+            {result.validationErrors?.repoUrl && (
+              <p className="text-xs text-red-500 mt-1">
+                {result.validationErrors.repoUrl._errors}
+              </p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="liveUrl" className="text-zinc-400 text-sm">
@@ -138,6 +158,11 @@ export function ProjectForm() {
               placeholder="https://..."
               className={inputClass}
             />
+            {result.validationErrors?.liveUrl && (
+              <p className="text-xs text-red-500 mt-1">
+                {result.validationErrors.liveUrl._errors}
+              </p>
+            )}
           </div>
         </div>
 
@@ -146,55 +171,28 @@ export function ProjectForm() {
             URL da Thumbnail
           </Label>
           <Input
-            id="thumbnail"
-            name="thumbnail"
+            id="imageUrl"
+            name="imageUrl"
             placeholder="https://images.unsplash.com/..."
             className={inputClass}
           />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="problem" className="text-zinc-400 text-sm">
-            Problema Resolvido
-          </Label>
-          <Textarea
-            id="problem"
-            name="problem"
-            placeholder="Qual problema este projeto resolve?"
-            className={`${inputClass} min-h-20 resize-none`}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="features" className="text-zinc-400 text-sm">
-            Funcionalidades (separado por vírgula)
-          </Label>
-          <Input
-            id="features"
-            name="features"
-            placeholder="Feature 1, Feature 2, Feature 3"
-            className={inputClass}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="architecture" className="text-zinc-400 text-sm">
-            Arquitetura
-          </Label>
-          <Textarea
-            id="architecture"
-            name="architecture"
-            placeholder="Detalhes da arquitetura técnica"
-            className={`${inputClass} min-h-20 resize-none`}
-          />
+          {result.validationErrors?.imageUrl && (
+            <p className="text-xs text-red-500 mt-1">
+              {result.validationErrors.imageUrl._errors}
+            </p>
+          )}
         </div>
 
         <div className="flex items-center gap-3">
-          {/* No Shadcn, o Switch precisa dos atributos name e value para funcionar em formulários nativos */}
-          <Switch id="featured" name="featured" value="true" />
+          <Switch id="featured" name="featured" value="on" />
           <Label htmlFor="featured" className="text-zinc-400 text-sm">
             Projeto em Destaque
           </Label>
+          {result.validationErrors?.featured && (
+            <p className="text-xs text-red-500 mt-1">
+              {result.validationErrors.featured._errors}
+            </p>
+          )}
         </div>
 
         <Separator className="bg-zinc-800/50" />
@@ -209,9 +207,16 @@ export function ProjectForm() {
           </Button>
           <Button
             type="submit"
+            disabled={isPending}
             className="bg-white text-zinc-900 hover:bg-zinc-200"
           >
-            Criar Projeto
+            {isPending ? (
+              <span className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" /> Criando...
+              </span>
+            ) : (
+              'Criar Projeto'
+            )}
           </Button>
         </div>
       </div>

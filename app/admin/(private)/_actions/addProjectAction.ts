@@ -7,13 +7,26 @@ import z from 'zod'
 import { zfd } from 'zod-form-data'
 
 const projectSchema = zfd.formData({
-  title: zfd.text(z.string().min(1, 'Título é obrigatório')),
-  description: zfd.text(z.string().min(1, 'Descrição é obrigatória')),
+  title: zfd.text(
+    z
+      .string({ message: 'Título é obrigatório' })
+      .min(6, { message: 'Título deve ter no mínimo 5 caracteres' }),
+  ),
+  description: zfd.text(
+    z
+      .string({ message: 'Descrição é obrigatória' })
+      .min(15, { message: 'Descrição deve ter no mínimo 15 caracteres' }),
+  ),
+  category: zfd.text(
+    z
+      .string({ message: 'Categoria é obrigatória' })
+      .min(1, 'Categoria é obrigatória'),
+  ),
   imageUrl: zfd.text(z.string().optional()),
   repoUrl: zfd.text(z.string().optional()),
   liveUrl: zfd.text(z.string().optional()),
   tags: zfd.text(z.string().optional()),
-  featured: zfd.checkbox(),
+  featured: z.unknown().transform((val) => val === 'true' || val === 'on'),
 })
 
 export const createProjectAction = authActionClient
@@ -30,6 +43,7 @@ export const createProjectAction = authActionClient
       data: {
         title: parsedInput.title,
         description: parsedInput.description,
+        category: parsedInput.category,
         imageUrl: parsedInput.imageUrl,
         repoUrl: parsedInput.repoUrl,
         liveUrl: parsedInput.liveUrl,

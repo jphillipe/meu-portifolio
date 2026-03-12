@@ -38,7 +38,7 @@ export default function RootLayout({
         <main className="pt-16">{children}</main>
         <Footer />
         <TitanConsoleEgg />
-        <Toaster position="bottom-right" />
+        <Toaster theme="dark" position="bottom-right" />
       </body>
     </html>
   )

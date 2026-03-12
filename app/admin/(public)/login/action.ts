@@ -1,7 +1,6 @@
 'use server'
 
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 import z from 'zod'
 import { zfd } from 'zod-form-data'
 import { actionClient } from '@/lib/safe-action'
@@ -48,5 +47,5 @@ export const loginAction = actionClient
       path: '/',
     })
 
-    redirect('/admin')
+    return { success: true }
   })

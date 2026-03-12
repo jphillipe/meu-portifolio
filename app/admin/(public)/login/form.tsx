@@ -6,15 +6,31 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { AlertCircle, Loader2, Terminal } from 'lucide-react'
-import React from 'react'
+import React, { useRef } from 'react'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 export function LoginForm() {
-  const { execute, result, isPending } = useAction(loginAction)
+  const router = useRouter()
+  const { executeAsync, result, isPending } = useAction(loginAction)
 
-  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+  const formRef = useRef<HTMLFormElement>(null)
+
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
-    execute(formData)
+
+    const toastId = toast.loading('Verificando credenciais...')
+    const response = await executeAsync(formData)
+
+    if (response?.data?.success) {
+      toast.success('Login realizado com sucesso! 🚀', { id: toastId })
+      router.push('/admin')
+    } else {
+      toast.error(response?.data?.serverError || 'Erro ao realizar login.', {
+        id: toastId,
+      })
+    }
   }
 
   return (
@@ -32,7 +48,7 @@ export function LoginForm() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
           {result.data?.serverError && (
             <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-sm text-red-400">
               <AlertCircle className="h-4 w-4 shrink-0" />
