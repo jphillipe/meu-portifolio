@@ -5,11 +5,17 @@ import { loginAction } from './action'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { AlertCircle, Terminal, Loader2 } from 'lucide-react'
-import Form from 'next/form'
+import { AlertCircle, Loader2, Terminal } from 'lucide-react'
+import React from 'react'
 
 export function LoginForm() {
   const { execute, result, isPending } = useAction(loginAction)
+
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    execute(formData)
+  }
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center px-6">
@@ -26,12 +32,11 @@ export function LoginForm() {
           </p>
         </div>
 
-        <Form action={execute} className="space-y-4">
-          {result?.data?.serverError && (
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {result.data?.serverError && (
             <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-sm text-red-400">
               <AlertCircle className="h-4 w-4 shrink-0" />
-              {result.data.serverError?.toString() ||
-                'Ocorreu um erro no servidor.'}
+              {result.data.serverError}
             </div>
           )}
 
@@ -45,9 +50,11 @@ export function LoginForm() {
               placeholder="admin@admin.com"
               className="bg-zinc-900/50 border-zinc-800 text-zinc-100 h-11"
             />
-            <p className="text-xs text-red-500 mt-1">
-              {result.validationErrors?.email?._errors}
-            </p>
+            {result.validationErrors?.email && (
+              <p className="text-xs text-red-500 mt-1">
+                {result.validationErrors.email._errors}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -61,9 +68,11 @@ export function LoginForm() {
               placeholder="••••••"
               className="bg-zinc-900/50 border-zinc-800 text-zinc-100 h-11"
             />
-            <p className="text-xs text-red-500 mt-1">
-              {result?.validationErrors?.password?._errors}
-            </p>
+            {result.validationErrors?.password && (
+              <p className="text-xs text-red-500 mt-1">
+                {result.validationErrors.password._errors}
+              </p>
+            )}
           </div>
 
           <Button
@@ -72,12 +81,14 @@ export function LoginForm() {
             className="w-full bg-white text-zinc-900 hover:bg-zinc-200 h-11 font-medium disabled:opacity-70"
           >
             {isPending ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
+              <span className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" /> Entrando...
+              </span>
             ) : (
               'Entrar'
             )}
           </Button>
-        </Form>
+        </form>
       </div>
     </div>
   )
