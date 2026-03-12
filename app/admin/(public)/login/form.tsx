@@ -1,15 +1,15 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useAction } from 'next-safe-action/hooks'
 import { loginAction } from './action'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { AlertCircle, Terminal } from 'lucide-react'
+import { AlertCircle, Terminal, Loader2 } from 'lucide-react'
 import Form from 'next/form'
 
 export function LoginForm() {
-  const [state, formAction] = useActionState(loginAction, null)
+  const { execute, result, isPending } = useAction(loginAction)
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center px-6">
@@ -26,11 +26,12 @@ export function LoginForm() {
           </p>
         </div>
 
-        <Form action={formAction} className="space-y-4">
-          {state?.message && (
+        <Form action={execute} className="space-y-4">
+          {result?.data?.serverError && (
             <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-sm text-red-400">
               <AlertCircle className="h-4 w-4 shrink-0" />
-              {state.message}
+              {result.data.serverError?.toString() ||
+                'Ocorreu um erro no servidor.'}
             </div>
           )}
 
@@ -45,7 +46,7 @@ export function LoginForm() {
               className="bg-zinc-900/50 border-zinc-800 text-zinc-100 h-11"
             />
             <p className="text-xs text-red-500 mt-1">
-              {state?.errors?.email ? state.errors.email.join(', ') : ''}
+              {result.validationErrors?.email?._errors}
             </p>
           </div>
 
@@ -61,15 +62,20 @@ export function LoginForm() {
               className="bg-zinc-900/50 border-zinc-800 text-zinc-100 h-11"
             />
             <p className="text-xs text-red-500 mt-1">
-              {state?.errors?.password ? state.errors.password.join(', ') : ''}
+              {result?.validationErrors?.password?._errors}
             </p>
           </div>
 
           <Button
             type="submit"
+            disabled={isPending}
             className="w-full bg-white text-zinc-900 hover:bg-zinc-200 h-11 font-medium disabled:opacity-70"
           >
-            Entrar
+            {isPending ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              'Entrar'
+            )}
           </Button>
         </Form>
       </div>
