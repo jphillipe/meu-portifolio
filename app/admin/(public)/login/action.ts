@@ -27,13 +27,13 @@ export const loginAction = actionClient
     })
 
     if (!user) {
-      return { serverError: 'E-mail ou senha incorretos.' }
+      return { serverError: 'E-mail não encontrado.' }
     }
 
     const isPasswordValid = bcrypt.compareSync(password, user.password)
 
     if (!isPasswordValid) {
-      return { serverError: 'E-mail ou senha incorretos.' }
+      return { serverError: 'Senha incorreta.' }
     }
 
     const cookieStore = await cookies()
