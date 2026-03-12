@@ -5,13 +5,13 @@ import { redirect } from 'next/navigation'
 import z from 'zod'
 import { zfd } from 'zod-form-data'
 import { actionClient } from '@/lib/safe-action'
+import { prisma } from '@/lib/prisma'
+import bcrypt from 'bcryptjs'
 
 const loginSchema = zfd.formData({
-  email: zfd.text(z.email({ error: 'Informe um email válido' })),
+  email: zfd.text(z.email({ message: 'Informe um email válido' })),
   password: zfd.text(
-    z
-      .string({ error: 'Senha é obrigatória' })
-      .min(6, { message: 'Senha deve ter no mínimo 6 caracteres' }),
+    z.string().min(6, { message: 'Senha deve ter no mínimo 6 caracteres' }),
   ),
 })
 
@@ -20,14 +20,22 @@ export const loginAction = actionClient
   .action(async ({ parsedInput }) => {
     const { email, password } = parsedInput
 
-    await new Promise((r) => setTimeout(r, 1000))
+    const user = await prisma.user.findUnique({
+      where: { email: email },
+    })
 
-    if (email !== 'admin@admin.com' || password !== '123456') {
+    if (!user) {
+      return { serverError: 'E-mail ou senha incorretos.' }
+    }
+
+    const isPasswordValid = bcrypt.compareSync(password, user.password)
+
+    if (!isPasswordValid) {
       return { serverError: 'E-mail ou senha incorretos.' }
     }
 
     const cookieStore = await cookies()
-    cookieStore.set('ADMIN_AUTH', 'mock-jwt-token-123', {
+    cookieStore.set('ADMIN_AUTH', 'token-ficticio-123', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
