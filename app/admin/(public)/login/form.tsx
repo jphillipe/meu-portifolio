@@ -1,15 +1,15 @@
 'use client'
 
 import { useActionState } from 'react'
-import { Terminal, AlertCircle, Loader2 } from 'lucide-react'
+import { loginAction } from './action'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { AlertCircle, Terminal } from 'lucide-react'
 import Form from 'next/form'
-import { loginAction } from './action'
 
 export function LoginForm() {
-  const [state, formAction, isPending] = useActionState(loginAction, null)
+  const [state, formAction] = useActionState(loginAction, null)
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center px-6">
@@ -19,35 +19,34 @@ export function LoginForm() {
             <Terminal className="h-6 w-6 text-zinc-900" />
           </div>
           <h1 className="text-2xl font-bold text-zinc-50 mb-2">
-            Bem-vindo de volta
+            Acesso Restrito
           </h1>
           <p className="text-sm text-zinc-500">
-            Entre para acessar o painel de administração
+            Entre com seu e-mail de administrador
           </p>
         </div>
 
-        {/* Usamos o 'next/form' que gerencia progressiva aprimorada (Progressive Enhancement) */}
         <Form action={formAction} className="space-y-4">
-          {/* Exibe o erro se a Server Action retornar um */}
-          {state?.error && (
-            <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-sm text-red-400 animate-fade-in">
+          {state?.message && (
+            <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-sm text-red-400">
               <AlertCircle className="h-4 w-4 shrink-0" />
-              {state.error}
+              {state.message}
             </div>
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="username" className="text-zinc-400 text-sm">
-              Usuário
+            <Label htmlFor="email" className="text-zinc-400 text-sm">
+              E-mail
             </Label>
-            {/* O atributo 'name' é obrigatório para o FormData funcionar */}
             <Input
-              id="username"
-              name="username"
-              placeholder="Digite o usuário"
-              className="bg-zinc-900/50 border-zinc-800 text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600 h-11"
-              required
+              id="email"
+              name="email"
+              placeholder="admin@admin.com"
+              className="bg-zinc-900/50 border-zinc-800 text-zinc-100 h-11"
             />
+            <p className="text-xs text-red-500 mt-1">
+              {state?.errors?.email ? state.errors.email.join(', ') : ''}
+            </p>
           </div>
 
           <div className="space-y-2">
@@ -58,32 +57,21 @@ export function LoginForm() {
               id="password"
               name="password"
               type="password"
-              placeholder="Digite a senha"
-              className="bg-zinc-900/50 border-zinc-800 text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600 h-11"
-              required
+              placeholder="••••••"
+              className="bg-zinc-900/50 border-zinc-800 text-zinc-100 h-11"
             />
+            <p className="text-xs text-red-500 mt-1">
+              {state?.errors?.password ? state.errors.password.join(', ') : ''}
+            </p>
           </div>
 
-          {/* isPending cuida automaticamente de desativar o botão durante a requisição */}
           <Button
             type="submit"
-            disabled={isPending}
             className="w-full bg-white text-zinc-900 hover:bg-zinc-200 h-11 font-medium disabled:opacity-70"
           >
-            {isPending ? (
-              <span className="flex items-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Entrando...
-              </span>
-            ) : (
-              'Entrar'
-            )}
+            Entrar
           </Button>
         </Form>
-
-        <p className="text-xs text-zinc-600 text-center mt-6">
-          Credenciais: admin / admin123
-        </p>
       </div>
     </div>
   )

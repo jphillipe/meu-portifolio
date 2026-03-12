@@ -1,54 +1,52 @@
 'use server'
 
-import { z } from 'zod'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import z from 'zod'
 
-// 1. Schema de validação usando Zod
 const loginSchema = z.object({
-  username: z.string().min(1, 'O usuário é obrigatório'),
-  password: z.string().min(1, 'A senha é obrigatória'),
+  email: z.email({ message: 'informe um email válido' }),
+  password: z
+    .string()
+    .min(6, { message: 'senha deve ter no mínimo 6 caracteres' }),
 })
 
-// Tipo do estado retornado para o cliente
-export type ActionState = {
-  error?: string
-  success?: boolean
-} | null
+type loginActionReturn = {
+  errors?: {
+    email?: string[]
+    password?: string[]
+  }
+  message?: string
+}
 
 export async function loginAction(
-  prevState: ActionState,
+  _prevState: loginActionReturn | null,
   formData: FormData,
-): Promise<ActionState> {
-  // 2. Extrai e valida os dados do formulário
-  const data = Object.fromEntries(formData)
-  const parsed = loginSchema.safeParse(data)
+): Promise<loginActionReturn> {
+  const data = Object.fromEntries(formData.entries())
 
-  if (!parsed.success) {
-    return { error: 'Preencha todos os campos.' }
+  const result = loginSchema.safeParse(data)
+
+  if (!result.success) {
+    return { errors: z.flattenError(result.error).fieldErrors }
   }
 
-  const { username, password } = parsed.data
+  const { email, password } = result.data
 
-  // Simula o tempo de resposta da rede
-  await new Promise((r) => setTimeout(r, 400))
+  await new Promise((r) => setTimeout(r, 1000))
 
-  // 3. Valida as credenciais (Fase Mock)
-  // No futuro, aqui você chamará seu service que fará o fetch pro Node/Express
-  if (username !== 'admin' || password !== 'admin123') {
-    return { error: 'Credenciais inválidas. Use admin / admin123' }
+  if (email !== 'admin@admin.com' || password !== '123456') {
+    return { message: 'E-mail ou senha incorretos.' }
   }
 
-  // 4. Salva o token fictício nos Cookies de forma segura
   const cookieStore = await cookies()
-  cookieStore.set('ADMIN_AUTH', 'mocked-jwt-token-123', {
+  cookieStore.set('ADMIN_AUTH', 'mock-jwt-token-123', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    maxAge: 60 * 60 * 24, // 1 dia de duração
+    maxAge: 60 * 60 * 24,
     path: '/',
   })
 
-  // 5. Redireciona para o painel privado (O Middleware vai deixar passar)
   redirect('/admin')
 }
