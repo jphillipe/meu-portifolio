@@ -7,6 +7,7 @@ import { zfd } from 'zod-form-data'
 import { actionClient } from '@/lib/safe-action'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
+import { encrypt } from '@/lib/session'
 
 const loginSchema = zfd.formData({
   email: zfd.text(z.email({ message: 'Informe um email válido' })),
@@ -36,12 +37,14 @@ export const loginAction = actionClient
       return { serverError: 'Senha incorreta.' }
     }
 
+    const token = await encrypt({ userId: user.id, email: user.email })
+
     const cookieStore = await cookies()
-    cookieStore.set('ADMIN_AUTH', 'token-ficticio-123', {
+    cookieStore.set('ADMIN_AUTH', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 60 * 60 * 24,
+      maxAge: 60 * 60 * 24 * 7,
       path: '/',
     })
 
