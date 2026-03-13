@@ -38,7 +38,7 @@ export async function viewAction(projectId: string) {
     },
   })
 
-  revalidatePath(`/projetos/${projectId}`)
+  revalidatePath(`/projects/${projectId}`)
 
   return { success: true, newView: true }
 }

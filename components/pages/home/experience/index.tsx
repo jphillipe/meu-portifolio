@@ -1,8 +1,18 @@
 'use client'
-import { experience } from '@/data/mock'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
+
+type ExperienceItem = {
+  title: string
+  company: string
+  period: string
+  description: string[]
+}
 
 export const Experience = () => {
+  const t = useTranslations('Experience')
+  const items = t.raw('items') as ExperienceItem[]
+
   return (
     <section className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
@@ -15,10 +25,10 @@ export const Experience = () => {
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
             <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-wider mb-4">
-              Career
+              {t('eyebrow')}
             </h2>
             <p className="text-2xl sm:text-3xl font-semibold text-zinc-100">
-              Experience
+              {t('title')}
             </p>
           </motion.div>
           <div className="lg:col-span-3">
@@ -26,7 +36,7 @@ export const Experience = () => {
               {/* Timeline line with gradient */}
               <div className="absolute left-1.25 top-2 bottom-0 w-px bg-linear-to-b from-blue-500/30 via-zinc-800 to-zinc-800/0" />
 
-              {experience.map((exp, index) => (
+              {items.map((exp, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}

@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { ArrowLeft, Github, ExternalLink, Calendar, Eye } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { cookies } from 'next/headers'
 import { LikeButton } from './_components/likeButton'
 import { ViewTracker } from './_components/viewTracker'
+import { getTranslations } from 'next-intl/server'
 
 export default async function ProjectDetailPage({
   params,
@@ -16,6 +17,7 @@ export default async function ProjectDetailPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
+  const t = await getTranslations('ProjectDetail')
   const cookieStore = await cookies()
   const sessionId = cookieStore.get('sessionId')?.value
 
@@ -72,7 +74,7 @@ export default async function ProjectDetailPage({
               href="/projects"
               className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-200 transition-colors mb-4"
             >
-              <ArrowLeft className="h-4 w-4" /> Voltar
+              <ArrowLeft className="h-4 w-4" /> {t('back')}
             </Link>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-50 mb-3">
               {project.title}
@@ -133,7 +135,7 @@ export default async function ProjectDetailPage({
                   size="sm"
                   className="bg-white text-zinc-900 hover:bg-zinc-200 gap-2"
                 >
-                  <ExternalLink className="h-4 w-4" /> Live Demo
+                  <ExternalLink className="h-4 w-4" /> {t('liveDemo')}
                 </Button>
               </a>
             )}
@@ -146,7 +148,7 @@ export default async function ProjectDetailPage({
           <div className="lg:col-span-2 space-y-12">
             <div>
               <h2 className="text-xl font-semibold text-zinc-100 mb-4">
-                Visão Geral
+                {t('overview')}
               </h2>
               <p className="text-zinc-400 leading-relaxed whitespace-pre-wrap">
                 {project.description}
@@ -157,7 +159,7 @@ export default async function ProjectDetailPage({
           <div className="space-y-6">
             <div className="rounded-xl border border-zinc-800/50 bg-zinc-900/30 p-6">
               <h3 className="text-sm font-medium text-zinc-300 mb-4">
-                Tecnologias
+                {t('technologies')}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tech) => (

@@ -18,6 +18,7 @@ import { deleteProjectAction } from '../_actions/deleteProjectAction'
 import { toast } from 'sonner'
 import { DeleteDialog } from './dialog'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 export function ProjectsList({
   projects,
@@ -29,6 +30,7 @@ export function ProjectsList({
   onNewProject: () => void
   onEditProject: (_project: ProjectWithYear) => void
 }) {
+  const t = useTranslations('Admin')
   const hasProjects = projects.length > 0
   const inputClass =
     'bg-zinc-800/50 border-zinc-700 text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600'
@@ -37,14 +39,14 @@ export function ProjectsList({
   const [searchTerm, setSearchTerm] = useState('')
 
   const handleDelete = async (id: string) => {
-    const toastId = toast.loading('Apagando projeto...')
+    const toastId = toast.loading(t('toastDeleting'))
 
     const response = await executeAsync({ id })
 
     if (response?.data?.success) {
-      toast.success('Projeto apagado com sucesso! 🗑️', { id: toastId })
+      toast.success(t('toastDeleteSuccess'), { id: toastId })
     } else {
-      toast.error('Erro ao apagar o projeto.', {
+      toast.error(t('toastDeleteError'), {
         id: toastId,
       })
     }
@@ -67,7 +69,7 @@ export function ProjectsList({
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
             <Input
-              placeholder="Buscar projetos..."
+              placeholder={t('searchPlaceholder')}
               className={`pl-10 h-10 ${inputClass}`}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -76,7 +78,7 @@ export function ProjectsList({
         ) : (
           <div className="flex items-center gap-2 text-sm text-zinc-500">
             <Sparkles className="h-4 w-4 text-zinc-400" />
-            Seu painel está pronto para receber o primeiro case.
+            {t('emptyHint')}
           </div>
         )}
         <Button
@@ -84,7 +86,7 @@ export function ProjectsList({
           size="sm"
           onClick={onNewProject}
         >
-          <Plus className="h-4 w-4" /> Novo Projeto
+          <Plus className="h-4 w-4" /> {t('newProject')}
         </Button>
       </div>
 
@@ -94,15 +96,17 @@ export function ProjectsList({
             <Table>
               <TableHeader>
                 <TableRow className="border-zinc-800/50 hover:bg-transparent">
-                  <TableHead className="text-zinc-400">Projeto</TableHead>
+                  <TableHead className="text-zinc-400">
+                    {t('tableProject')}
+                  </TableHead>
                   <TableHead className="text-zinc-400 hidden sm:table-cell">
-                    Categoria
+                    {t('tableCategory')}
                   </TableHead>
                   <TableHead className="text-zinc-400 hidden md:table-cell">
-                    Ano
+                    {t('tableYear')}
                   </TableHead>
                   <TableHead className="text-zinc-400 text-right">
-                    Ações
+                    {t('tableActions')}
                   </TableHead>
                 </TableRow>
               </TableHeader>
@@ -153,16 +157,16 @@ export function ProjectsList({
               <div className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/50 px-4 py-2.5">
                 <Search className="h-3.5 w-3.5 text-zinc-500" />
                 <span className="font-mono text-sm text-zinc-400">
-                  <span className="text-zinc-200">~</span> no matches found
+                  <span className="text-zinc-200">~</span>{' '}
+                  {t('noMatchesTerminal')}
                 </span>
               </div>
 
               <h3 className="mt-6 text-2xl font-semibold text-zinc-50">
-                Nenhum projeto combina com sua busca
+                {t('noMatchesTitle')}
               </h3>
               <p className="mt-3 max-w-md text-sm leading-6 text-zinc-500 sm:text-base">
-                Tente procurar por outro nome, categoria ou ano. O filtro está
-                ativo, mas não encontrou nenhuma correspondência para
+                {t('noMatchesDescription')}
                 <span className="text-zinc-300"> &quot;{searchTerm}&quot;</span>
                 .
               </p>
@@ -173,7 +177,7 @@ export function ProjectsList({
                   className="border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100"
                   onClick={() => setSearchTerm('')}
                 >
-                  Limpar busca
+                  {t('clearSearch')}
                 </Button>
               </div>
             </div>
@@ -185,16 +189,16 @@ export function ProjectsList({
             <div className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/50 px-4 py-2.5">
               <Terminal className="h-3.5 w-3.5 text-zinc-500" />
               <span className="font-mono text-sm text-zinc-400">
-                <span className="text-zinc-200">~</span> no projects found
+                <span className="text-zinc-200">~</span>{' '}
+                {t('noProjectsTerminal')}
               </span>
             </div>
 
             <h3 className="mt-6 text-2xl font-semibold text-zinc-50">
-              Sua vitrine começa aqui
+              {t('noProjectsTitle')}
             </h3>
             <p className="mt-3 max-w-md text-sm leading-6 text-zinc-500 sm:text-base">
-              Ainda não existe nenhum projeto cadastrado. Crie o primeiro item
-              para preencher o painel e refletir isso na página inicial.
+              {t('noProjectsDescription')}
             </p>
 
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row">
@@ -202,7 +206,7 @@ export function ProjectsList({
                 className="bg-white text-zinc-900 hover:bg-zinc-200 gap-2"
                 onClick={onNewProject}
               >
-                <Plus className="h-4 w-4" /> Criar primeiro projeto
+                <Plus className="h-4 w-4" /> {t('createFirst')}
               </Button>
             </div>
           </div>

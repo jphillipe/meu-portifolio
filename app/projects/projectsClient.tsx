@@ -5,6 +5,7 @@ import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Project } from '@/lib/generated/prisma/client'
 import { ProjectCard } from '@/components/pages/home/featured/card'
+import { useTranslations } from 'next-intl'
 
 export type ProjectWithCounts = Project & {
   _count: {
@@ -17,11 +18,12 @@ export function ProjectsClient({
 }: {
   projects: ProjectWithCounts[]
 }) {
+  const t = useTranslations('Projects')
   const [search, setSearch] = useState<string>('')
-  const [activeCategory, setActiveCategory] = useState<string>('All')
+  const [activeCategory, setActiveCategory] = useState<string>('all')
 
   const categories = [
-    'All',
+    'all',
     ...(Array.from(
       new Set(projects.map((p) => p.category).filter(Boolean)),
     ) as string[]),
@@ -35,7 +37,7 @@ export function ProjectsClient({
         p.description.toLowerCase().includes(searchTerm) ||
         p.tags.some((t) => t.toLowerCase().includes(searchTerm))
       const matchesCategory =
-        activeCategory === 'All' || p.category === activeCategory
+        activeCategory === 'all' || p.category === activeCategory
 
       return matchesSearch && matchesCategory
     })
@@ -46,11 +48,9 @@ export function ProjectsClient({
       <div className="max-w-6xl mx-auto">
         <div className="mb-12">
           <h1 className="text-3xl sm:text-4xl font-bold text-zinc-50 mb-3">
-            Projetos
+            {t('title')}
           </h1>
-          <p className="text-zinc-400 text-lg">
-            Uma coleção de projetos que construí e aos quais contribuí.
-          </p>
+          <p className="text-zinc-400 text-lg">{t('subtitle')}</p>
         </div>
 
         <div className="mb-6">
@@ -59,7 +59,7 @@ export function ProjectsClient({
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar projetos, tecnologias..."
+              placeholder={t('searchPlaceholder')}
               className="pl-10 bg-zinc-900/50 border-zinc-800 text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600 h-11"
             />
           </div>
@@ -76,14 +76,15 @@ export function ProjectsClient({
                   : 'bg-zinc-900/50 text-zinc-400 border border-zinc-800 hover:border-zinc-700 hover:text-zinc-200'
               }`}
             >
-              {cat === 'All' ? 'Todos' : cat}
+              {cat === 'all' ? t('allCategory') : cat}
             </button>
           ))}
         </div>
 
         <p className="text-sm text-zinc-500 mb-6">
-          {filteredProjects.length} projeto
-          {filteredProjects.length !== 1 ? 's' : ''}
+          {filteredProjects.length === 1
+            ? t('count', { count: filteredProjects.length })
+            : t('count_plural', { count: filteredProjects.length })}
         </p>
 
         {filteredProjects.length > 0 ? (
@@ -98,7 +99,7 @@ export function ProjectsClient({
           </div>
         ) : (
           <div className="text-center py-20">
-            <p className="text-zinc-500">Nenhum projeto encontrado.</p>
+            <p className="text-zinc-500">{t('empty')}</p>
           </div>
         )}
       </div>

@@ -17,19 +17,22 @@ import {
   useInView,
 } from 'framer-motion'
 import { useEffect, useRef } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 
 const AnimatedCounter = ({
   target,
   suffix = '',
+  locale,
 }: {
   target: number
   suffix?: string
+  locale: string
 }) => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.5 })
   const count = useMotionValue(0)
   const rounded = useTransform(count, (v) =>
-    Math.round(v).toLocaleString('pt-BR'),
+    Math.round(v).toLocaleString(locale === 'en' ? 'en-US' : 'pt-BR'),
   )
 
   useEffect(() => {
@@ -50,6 +53,9 @@ const AnimatedCounter = ({
 }
 
 export const About = () => {
+  const t = useTranslations('About')
+  const locale = useLocale()
+
   const stats: {
     icon: LucideIcon
     value: number
@@ -60,19 +66,19 @@ export const About = () => {
       icon: Briefcase,
       value: developerProfile.yearsOfExperience,
       suffix: '+',
-      label: 'Years Experience',
+      label: t('yearsExperience'),
     },
     {
       icon: Code2,
       value: developerProfile.projectsCompleted,
       suffix: '+',
-      label: 'Projects Completed',
+      label: t('projectsCompleted'),
     },
     {
       icon: GitBranch,
       value: developerProfile.githubContributions,
       suffix: '+',
-      label: 'Technologies Used',
+      label: t('technologiesUsed'),
     },
   ]
 
@@ -88,14 +94,12 @@ export const About = () => {
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
             <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-wider mb-4">
-              About
+              {t('eyebrow')}
             </h2>
             <p className="text-2xl sm:text-3xl font-semibold text-zinc-100 leading-snug mb-6">
-              I build software that solves real problems and delights users.
+              {t('title')}
             </p>
-            <p className="text-zinc-400 leading-relaxed mb-4">
-              {developerProfile.bio}
-            </p>
+            <p className="text-zinc-400 leading-relaxed mb-4">{t('bio')}</p>
             <div className="flex items-center gap-4 text-sm text-zinc-500">
               <span className="flex items-center gap-2">
                 <MapPin className="h-4 w-4" />
@@ -124,7 +128,11 @@ export const About = () => {
                 <div className="p-5 rounded-xl border border-zinc-800/50 bg-zinc-900/30 hover:border-zinc-700/50 hover:bg-zinc-800/20 transition-all duration-300 group">
                   <stat.icon className="h-5 w-5 text-zinc-500 mb-3 group-hover:text-blue-400/70 transition-colors" />
                   <div className="text-2xl font-bold text-zinc-100">
-                    <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                    <AnimatedCounter
+                      target={stat.value}
+                      suffix={stat.suffix}
+                      locale={locale}
+                    />
                   </div>
                   <div className="text-xs text-zinc-500 mt-1">{stat.label}</div>
                 </div>

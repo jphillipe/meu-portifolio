@@ -1,11 +1,12 @@
 'use client'
 
 import { Github, ExternalLink, Heart } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { motion, useAnimation } from 'framer-motion'
 import { Project } from '@/lib/generated/prisma/client'
+import { useTranslations } from 'next-intl'
 
 export const ProjectCard = ({
   project,
@@ -14,6 +15,7 @@ export const ProjectCard = ({
   project: Project
   totalLikes: number
 }) => {
+  const t = useTranslations('Featured')
   const shineControls = useAnimation()
 
   const handleHoverStart = async () => {
@@ -63,7 +65,7 @@ export const ProjectCard = ({
           {/* Featured badge */}
           {project.featured && (
             <div className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-zinc-900/80 backdrop-blur-md border border-white/10 text-[10px] font-medium text-white uppercase tracking-wider">
-              Featured
+              {t('featuredBadge')}
             </div>
           )}
         </div>
@@ -128,7 +130,7 @@ export const ProjectCard = ({
                     )
                   }}
                   className="text-zinc-500 hover:text-zinc-200 transition-colors p-1 rounded hover:bg-zinc-800/50"
-                  aria-label="GitHub"
+                  aria-label={t('githubAria')}
                 >
                   <Github className="h-4 w-4" />
                 </button>
@@ -144,7 +146,7 @@ export const ProjectCard = ({
                     )
                   }}
                   className="text-zinc-500 hover:text-zinc-200 transition-colors p-1 rounded hover:bg-zinc-800/50"
-                  aria-label="Live Demo"
+                  aria-label={t('liveDemoAria')}
                 >
                   <ExternalLink className="h-4 w-4" />
                 </button>

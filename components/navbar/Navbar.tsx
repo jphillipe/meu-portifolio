@@ -2,26 +2,35 @@
 import React, { useState } from 'react'
 import { Menu, X, Terminal, Lock } from 'lucide-react'
 import { Button } from '../ui/button'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { Link } from '@/i18n/navigation'
+import { useLocale, useTranslations } from 'next-intl'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface NavLink {
-  label: string
+  labelKey: 'home' | 'projects'
   path: string
 }
 
 const navLinks: NavLink[] = [
-  { label: 'Home', path: '/' },
-  { label: 'Projects', path: '/projects' },
+  { labelKey: 'home', path: '/' },
+  { labelKey: 'projects', path: '/projects' },
 ]
 
 const Navbar: React.FC = () => {
-  const location = usePathname()
+  const pathname = usePathname()
+  const router = useRouter()
+  const locale = useLocale()
+  const t = useTranslations('Navbar')
   const [mobileOpen, setMobileOpen] = useState<boolean>(false)
 
   const isActive = (path: string): boolean => {
-    if (path === '/') return location === '/'
-    return location.startsWith(path)
+    if (path === '/') return pathname === '/'
+    return pathname.startsWith(path)
+  }
+
+  const switchLocale = (nextLocale: 'pt' | 'en') => {
+    document.cookie = `NEXT_LOCALE=${nextLocale}; Path=/; Max-Age=31536000; SameSite=Lax`
+    router.refresh()
   }
 
   return (
@@ -47,24 +56,51 @@ const Navbar: React.FC = () => {
                   : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/30'
               }`}
             >
-              {link.label}
+              {t(link.labelKey)}
             </Link>
           ))}
         </div>
 
         <div className="flex items-center gap-2">
+          <div className="hidden sm:flex items-center rounded-md border border-zinc-800/60 bg-zinc-900/50 p-1">
+            <button
+              type="button"
+              aria-label={t('portuguese')}
+              onClick={() => switchLocale('pt')}
+              className={`px-2 py-1 text-xs rounded transition-colors ${
+                locale === 'pt'
+                  ? 'bg-zinc-200 text-zinc-900'
+                  : 'text-zinc-400 hover:text-zinc-200'
+              }`}
+            >
+              {t('portuguese')}
+            </button>
+            <button
+              type="button"
+              aria-label={t('english')}
+              onClick={() => switchLocale('en')}
+              className={`px-2 py-1 text-xs rounded transition-colors ${
+                locale === 'en'
+                  ? 'bg-zinc-200 text-zinc-900'
+                  : 'text-zinc-400 hover:text-zinc-200'
+              }`}
+            >
+              {t('english')}
+            </button>
+          </div>
+
           <Link href="/admin">
             <Button
               variant="ghost"
               size="sm"
               className={`text-sm gap-2 ${
-                location.startsWith('/admin')
+                pathname.startsWith('/admin')
                   ? 'text-zinc-50 bg-zinc-800/50'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
               <Lock className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Admin</span>
+              <span className="hidden sm:inline">{t('admin')}</span>
             </Button>
           </Link>
 
@@ -97,7 +133,7 @@ const Navbar: React.FC = () => {
                     : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             ))}
             <Link
@@ -106,8 +142,38 @@ const Navbar: React.FC = () => {
               className="px-4 py-3 rounded-lg text-sm text-zinc-400 hover:text-zinc-200 flex items-center gap-2"
             >
               <Lock className="h-3.5 w-3.5" />
-              Admin Dashboard
+              {t('adminDashboard')}
             </Link>
+            <div className="mt-2 flex items-center gap-2 px-4">
+              <button
+                type="button"
+                onClick={() => {
+                  switchLocale('pt')
+                  setMobileOpen(false)
+                }}
+                className={`px-3 py-1.5 text-xs rounded border transition-colors ${
+                  locale === 'pt'
+                    ? 'border-zinc-200 bg-zinc-200 text-zinc-900'
+                    : 'border-zinc-700 text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                {t('portuguese')}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  switchLocale('en')
+                  setMobileOpen(false)
+                }}
+                className={`px-3 py-1.5 text-xs rounded border transition-colors ${
+                  locale === 'en'
+                    ? 'border-zinc-200 bg-zinc-200 text-zinc-900'
+                    : 'border-zinc-700 text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                {t('english')}
+              </button>
+            </div>
           </div>
         </div>
       )}

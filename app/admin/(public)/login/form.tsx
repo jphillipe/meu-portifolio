@@ -7,10 +7,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { AlertCircle, Loader2, Terminal } from 'lucide-react'
 import React, { useRef } from 'react'
-import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { useRouter } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 
 export function LoginForm() {
+  const t = useTranslations('Admin')
   const router = useRouter()
   const { executeAsync, result, isPending } = useAction(loginAction)
 
@@ -20,14 +22,14 @@ export function LoginForm() {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
 
-    const toastId = toast.loading('Verificando credenciais...')
+    const toastId = toast.loading(t('toastChecking'))
     const response = await executeAsync(formData)
 
     if (response?.data?.success) {
-      toast.success('Login realizado com sucesso! 🚀', { id: toastId })
+      toast.success(t('toastLoginSuccess'), { id: toastId })
       router.push('/admin')
     } else {
-      toast.error(response?.data?.serverError || 'Erro ao realizar login.', {
+      toast.error(response?.data?.serverError || t('toastLoginError'), {
         id: toastId,
       })
     }
@@ -41,11 +43,9 @@ export function LoginForm() {
             <Terminal className="h-6 w-6 text-zinc-900" />
           </div>
           <h1 className="text-2xl font-bold text-zinc-50 mb-2">
-            Acesso Restrito
+            {t('loginTitle')}
           </h1>
-          <p className="text-sm text-zinc-500">
-            Entre com seu e-mail de administrador
-          </p>
+          <p className="text-sm text-zinc-500">{t('loginSubtitle')}</p>
         </div>
 
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
@@ -58,7 +58,7 @@ export function LoginForm() {
 
           <div className="space-y-2">
             <Label htmlFor="email" className="text-zinc-400 text-sm">
-              E-mail
+              {t('email')}
             </Label>
             <Input
               id="email"
@@ -75,7 +75,7 @@ export function LoginForm() {
 
           <div className="space-y-2">
             <Label htmlFor="password" className="text-zinc-400 text-sm">
-              Senha
+              {t('password')}
             </Label>
             <Input
               id="password"
@@ -98,10 +98,10 @@ export function LoginForm() {
           >
             {isPending ? (
               <span className="flex items-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin" /> Entrando...
+                <Loader2 className="h-4 w-4 animate-spin" /> {t('loggingIn')}
               </span>
             ) : (
-              'Entrar'
+              t('login')
             )}
           </Button>
         </form>

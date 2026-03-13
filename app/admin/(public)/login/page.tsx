@@ -1,10 +1,14 @@
 import type { Metadata } from 'next'
 import { LoginForm } from './form'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata: Metadata = {
-  title: 'Login | Painel Admin',
-  description:
-    'Faça login para acessar o painel de administração do portfólio.',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('Admin')
+
+  return {
+    title: `${t('login')} | ${t('title')}`,
+    description: t('loginSubtitle'),
+  }
 }
 
 export default function LoginPage() {

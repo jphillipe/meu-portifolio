@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Trash2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export function DeleteDialog({
   onDeleteProject,
@@ -19,6 +20,8 @@ export function DeleteDialog({
   onDeleteProject: () => void
   disabled?: boolean
 }) {
+  const t = useTranslations('Admin')
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -33,16 +36,15 @@ export function DeleteDialog({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+          <AlertDialogTitle>{t('deleteTitle')}</AlertDialogTitle>
           <AlertDialogDescription>
-            Essa ação não pode ser desfeita. Isso irá apagar permanentemente
-            este projeto do seu portfólio.
+            {t('deleteDescription')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
           <AlertDialogAction onClick={onDeleteProject}>
-            Continue
+            {t('continue')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

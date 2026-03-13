@@ -1,8 +1,11 @@
 'use client'
 import { techStack } from '@/data/mock'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
 export const Tech = () => {
+  const t = useTranslations('Tech')
+
   return (
     <section className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
@@ -13,10 +16,10 @@ export const Tech = () => {
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
           <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-wider mb-4">
-            Technologies
+            {t('eyebrow')}
           </h2>
           <p className="text-2xl sm:text-3xl font-semibold text-zinc-100 mb-10">
-            Tech Stack
+            {t('title')}
           </p>
         </motion.div>
         <div className="flex flex-wrap gap-3">

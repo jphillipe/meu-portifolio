@@ -1,9 +1,10 @@
 'use client'
 import { ArrowRight } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { ProjectCard } from './card'
 import { motion } from 'framer-motion'
 import { Project } from '@/lib/generated/prisma/client'
+import { useTranslations } from 'next-intl'
 
 export type ProjectWithCounts = Project & {
   _count: {
@@ -11,6 +12,7 @@ export type ProjectWithCounts = Project & {
   }
 }
 export const Featured = ({ projects }: { projects: ProjectWithCounts[] }) => {
+  const t = useTranslations('Featured')
   const featuredProjects = projects.filter((p) => p.featured).slice(0, 4)
   return (
     <section className="py-24 px-6">
@@ -24,17 +26,17 @@ export const Featured = ({ projects }: { projects: ProjectWithCounts[] }) => {
         >
           <div>
             <h2 className="text-sm font-medium text-zinc-500 uppercase tracking-wider mb-4">
-              Featured Work
+              {t('eyebrow')}
             </h2>
             <p className="text-2xl sm:text-3xl font-semibold text-zinc-100">
-              Selected Projects
+              {t('title')}
             </p>
           </div>
           <Link
             href="/projects"
             className="text-sm text-zinc-400 hover:text-zinc-200 transition-colors flex items-center gap-1 group"
           >
-            View all{' '}
+            {t('viewAll')}{' '}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </motion.div>

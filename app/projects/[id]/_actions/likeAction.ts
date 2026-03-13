@@ -40,7 +40,7 @@ export async function toggleLikeAction(projectId: string) {
     })
   }
 
-  revalidatePath(`/projetos/${projectId}`)
+  revalidatePath(`/projects/${projectId}`)
 
   return { liked: !existingLike }
 }

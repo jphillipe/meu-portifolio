@@ -1,4 +1,5 @@
 import { FolderOpen, Eye, Heart } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface DashboardStatsProps {
   totalProjects: number
@@ -11,6 +12,8 @@ export function DashboardStats({
   totalViews,
   totalLikes,
 }: DashboardStatsProps) {
+  const t = useTranslations('Admin')
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
       <div className="p-4 rounded-xl border border-zinc-800/50 bg-zinc-900/30 flex items-center gap-4">
@@ -19,7 +22,7 @@ export function DashboardStats({
         </div>
         <div>
           <div className="text-xl font-bold text-zinc-100">{totalProjects}</div>
-          <div className="text-xs text-zinc-500">Total de Projetos</div>
+          <div className="text-xs text-zinc-500">{t('statsProjects')}</div>
         </div>
       </div>
       <div className="p-4 rounded-xl border border-zinc-800/50 bg-zinc-900/30 flex items-center gap-4">
@@ -30,7 +33,7 @@ export function DashboardStats({
           <div className="text-xl font-bold text-zinc-100">
             {totalViews.toLocaleString()}
           </div>
-          <div className="text-xs text-zinc-500">Visualizações Totais</div>
+          <div className="text-xs text-zinc-500">{t('statsViews')}</div>
         </div>
       </div>
       <div className="p-4 rounded-xl border border-zinc-800/50 bg-zinc-900/30 flex items-center gap-4">
@@ -41,7 +44,7 @@ export function DashboardStats({
           <div className="text-xl font-bold text-zinc-100">
             {totalLikes.toLocaleString()}
           </div>
-          <div className="text-xs text-zinc-500">Likes Totais</div>
+          <div className="text-xs text-zinc-500">{t('statsLikes')}</div>
         </div>
       </div>
     </div>

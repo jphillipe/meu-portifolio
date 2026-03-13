@@ -5,6 +5,8 @@ import Navbar from '@/components/navbar/Navbar'
 import Footer from '@/components/footer/Footer'
 import { Toaster } from '@/components/ui/sonner'
 import { TitanConsoleEgg } from '@/components/easter-egg/TitanConsoleEgg'
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessages, getTranslations } from 'next-intl/server'
 
 const inter = Inter({
   variable: '--font-inter',
@@ -17,28 +19,37 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500', '600'],
 })
 
-export const metadata: Metadata = {
-  title: 'J.Phillipe | Full Stack Engineer',
-  description: 'Portfólio de J.Phillipe',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('Meta')
+
+  return {
+    title: t('siteTitle'),
+    description: t('siteDescription'),
+  }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const locale = await getLocale()
+  const messages = await getMessages()
+
   return (
     <html
-      lang="pt-BR"
+      lang={locale}
       className={`${inter.variable} ${jetbrainsMono.variable} dark`}
       suppressHydrationWarning
     >
       <body className="font-sans antialiased bg-background ">
-        <Navbar />
-        <main className="pt-16">{children}</main>
-        <Footer />
-        <TitanConsoleEgg />
-        <Toaster theme="dark" position="bottom-right" />
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <Navbar />
+          <main className="pt-16">{children}</main>
+          <Footer />
+          <TitanConsoleEgg />
+          <Toaster theme="dark" position="bottom-right" />
+        </NextIntlClientProvider>
       </body>
     </html>
   )

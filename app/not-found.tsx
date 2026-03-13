@@ -1,10 +1,11 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { ArrowLeft, Terminal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`'
 
@@ -74,6 +75,7 @@ const particles = Array.from({ length: 15 }, (_, i) => ({
 }))
 
 export default function NotFound() {
+  const t = useTranslations('NotFound')
   const glitchedTitle = useGlitchText('404', 1200)
   const [showContent, setShowContent] = useState(false)
 
@@ -122,14 +124,13 @@ export default function NotFound() {
             <div className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/50 px-4 py-2.5 mb-6">
               <Terminal className="h-3.5 w-3.5 text-zinc-500" />
               <span className="font-mono text-sm text-zinc-400">
-                <span className="text-blue-400">~</span> page not found
+                <span className="text-blue-400">~</span> {t('terminal')}
                 <span className="inline-block w-1.5 h-4 bg-zinc-400 ml-1 align-middle animate-blink" />
               </span>
             </div>
 
             <p className="text-zinc-500 text-sm leading-relaxed">
-              A página que você está procurando não existe ou foi movida para
-              outro endereço.
+              {t('description')}
             </p>
           </motion.div>
         )}
@@ -144,7 +145,7 @@ export default function NotFound() {
             <Link href="/">
               <Button className="bg-white text-zinc-900 hover:bg-zinc-200 font-medium px-6 h-11 text-sm group">
                 <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                Voltar ao início
+                {t('backHome')}
               </Button>
             </Link>
           </motion.div>

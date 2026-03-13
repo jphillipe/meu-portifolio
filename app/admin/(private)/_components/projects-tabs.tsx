@@ -5,12 +5,14 @@ import { ProjectsList } from './projects-list'
 import { ProjectForm } from './project-form'
 import { Project } from '@/lib/generated/prisma/client'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 export type ProjectWithYear = Project & {
   year: number
 }
 
 export function ProjectsTabs({ projects }: { projects: ProjectWithYear[] }) {
+  const t = useTranslations('Admin')
   const [activeTab, setActiveTab] = useState('projects')
   const [editingProject, setEditingProject] = useState<ProjectWithYear | null>(
     null,
@@ -38,13 +40,13 @@ export function ProjectsTabs({ projects }: { projects: ProjectWithYear[] }) {
           value="projects"
           className="data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100"
         >
-          Projetos
+          {t('tabProjects')}
         </TabsTrigger>
         <TabsTrigger
           value="create"
           className="data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100"
         >
-          {editingProject ? 'Editar Projeto' : 'Novo Projeto'}
+          {editingProject ? t('tabEdit') : t('tabNew')}
         </TabsTrigger>
       </TabsList>
 

@@ -22,6 +22,7 @@ import { Loader2, UploadCloud } from 'lucide-react' // Adicionado UploadCloud
 import { toast } from 'sonner'
 import { ProjectWithYear } from './projects-tabs'
 import { editProjectAction } from '../_actions/editProjectAction'
+import { useTranslations } from 'next-intl'
 
 type ProjectFormProps = {
   onSuccess?: () => void
@@ -29,6 +30,7 @@ type ProjectFormProps = {
 }
 
 export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
+  const t = useTranslations('Admin')
   const inputClass =
     'bg-zinc-800/50 border-zinc-700 text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600'
   const MOCK_CATEGORIES = ['Front-end', 'Back-end', 'Full Stack', 'Mobile']
@@ -56,7 +58,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
     }
 
     const toastId = toast.loading(
-      initialData ? 'Atualizando...' : 'Salvando...',
+      initialData ? t('toastUpdating') : t('toastSaving'),
     )
 
     const response = initialData
@@ -65,14 +67,14 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
 
     if (response?.data?.success) {
       toast.success(
-        initialData ? 'Atualizado com sucesso! 🚀' : 'Criado com sucesso! 🚀',
+        initialData ? t('toastUpdateSuccess') : t('toastCreateSuccess'),
         { id: toastId },
       )
       formRef.current?.reset()
       setUploadedImage('')
       if (onSuccess) onSuccess()
     } else {
-      toast.error('Erro ao salvar os dados.', { id: toastId })
+      toast.error(t('toastSaveError'), { id: toastId })
     }
   }
 
@@ -80,13 +82,13 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
     <form ref={formRef} onSubmit={handleSubmit}>
       <div className="rounded-xl border border-zinc-800/50 bg-zinc-900/20 p-6 space-y-6">
         <h2 className="text-lg font-semibold text-zinc-100">
-          {initialData ? 'Editar Projeto' : 'Novo Projeto'}
+          {initialData ? t('formEditTitle') : t('formNewTitle')}
         </h2>
         <Separator className="bg-zinc-800/50" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="title">Título *</Label>
+            <Label htmlFor="title">{t('fieldTitle')}</Label>
 
             <Input
               id="title"
@@ -102,7 +104,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="category">Categoria</Label>
+            <Label htmlFor="category">{t('fieldCategory')}</Label>
             <Select
               name="category"
               defaultValue={initialData?.category || undefined}
@@ -111,7 +113,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
                 id="category"
                 className="bg-zinc-800/50 border-zinc-700 w-full text-zinc-100"
               >
-                <SelectValue placeholder="Selecione..." />
+                <SelectValue placeholder={t('selectPlaceholder')} />
               </SelectTrigger>
               <SelectContent className="bg-zinc-900 border-zinc-700">
                 {MOCK_CATEGORIES.map((cat) => (
@@ -129,19 +131,19 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="tags">Tech Stack</Label>
+            <Label htmlFor="tags">{t('fieldTags')}</Label>
             <Input
               id="tags"
               name="tags"
               defaultValue={initialData?.tags.join(', ')}
-              placeholder="React, Next"
+              placeholder={t('tagsPlaceholder')}
               className={inputClass}
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="description">Descrição</Label>
+          <Label htmlFor="description">{t('fieldDescription')}</Label>
           <Textarea
             id="description"
             name="description"
@@ -157,7 +159,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="repoUrl">GitHub URL</Label>
+            <Label htmlFor="repoUrl">{t('fieldRepo')}</Label>
             <Input
               id="repoUrl"
               name="repoUrl"
@@ -166,7 +168,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="liveUrl">Live Demo URL</Label>
+            <Label htmlFor="liveUrl">{t('fieldLive')}</Label>
             <Input
               id="liveUrl"
               name="liveUrl"
@@ -178,7 +180,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
 
         {/* --- MODIFICADO: ÁREA DO CLOUDINARY --- */}
         <div className="space-y-2">
-          <Label>Capa do Projeto (Upload)</Label>
+          <Label>{t('fieldCover')}</Label>
 
           {/* Input oculto que o Zod vai capturar no submit */}
           <input type="hidden" name="imageUrl" value={uploadedImage} />
@@ -210,7 +212,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
                   className="bg-zinc-800/50 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:text-zinc-100 gap-2"
                 >
                   <UploadCloud className="w-4 h-4" />
-                  {uploadedImage ? 'Trocar Imagem' : 'Fazer Upload'}
+                  {uploadedImage ? t('replaceImage') : t('uploadImage')}
                 </Button>
               )}
             </CldUploadWidget>
@@ -225,7 +227,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
             value="on"
             defaultChecked={initialData?.featured}
           />
-          <Label htmlFor="featured">Projeto em Destaque</Label>
+          <Label htmlFor="featured">{t('fieldFeatured')}</Label>
         </div>
 
         <Separator className="bg-zinc-800/50" />
@@ -237,7 +239,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
             onClick={onSuccess}
             className="border-zinc-700 text-zinc-400"
           >
-            Cancelar
+            {t('cancel')}
           </Button>
           <Button
             type="submit"
@@ -246,12 +248,12 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
           >
             {isPending ? (
               <span className="flex items-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin" /> Salvando...
+                <Loader2 className="h-4 w-4 animate-spin" /> {t('saving')}
               </span>
             ) : initialData ? (
-              'Salvar Alterações'
+              t('saveChanges')
             ) : (
-              'Criar Projeto'
+              t('createProject')
             )}
           </Button>
         </div>

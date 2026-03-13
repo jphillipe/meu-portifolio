@@ -1,0 +1,163 @@
+{
+  "Meta": {
+    "siteTitle": "J.Phillipe | Full Stack Engineer",
+    "siteDescription": "J.Phillipe portfolio"
+  },
+  "Navbar": {
+    "home": "Home",
+    "projects": "Projects",
+    "admin": "Admin",
+    "adminDashboard": "Admin Dashboard",
+    "languageLabel": "Language",
+    "portuguese": "PT",
+    "english": "EN"
+  },
+  "Footer": {
+    "about": "{title} based in {location}. Building software that makes a difference.",
+    "navigation": "Navigation",
+    "home": "Home",
+    "projects": "Projects",
+    "contact": "Contact",
+    "connect": "Connect",
+    "rights": "© {year} {name}. All rights reserved."
+  },
+  "Hero": {
+    "role": "Full Stack Engineer",
+    "tagline": "Building elegant solutions to complex problems",
+    "available": "Available for new projects",
+    "specializing": "Specializing in React, Node.js, and cloud architecture.",
+    "viewProjects": "View projects",
+    "getInTouch": "Get in touch"
+  },
+  "About": {
+    "eyebrow": "About",
+    "title": "I build software that solves real problems and delights users.",
+    "bio": "Passionate full-stack engineer with 2+ years of experience crafting high-performance applications. I specialize in React, Node.js, and cloud architecture. I love turning ideas into reality and I am always eager to learn new technologies.",
+    "yearsExperience": "Years experience",
+    "projectsCompleted": "Projects completed",
+    "technologiesUsed": "Technologies used"
+  },
+  "Experience": {
+    "eyebrow": "Career",
+    "title": "Experience",
+    "items": [
+      {
+        "title": "Front-End Developer",
+        "company": "Blue - Health Insurance",
+        "period": "Jul/2024 - Present",
+        "description": [
+          "Development and maintenance of administrative dashboards and internal portals for managing proposals, contracts, and documents in the health sector.",
+          "Implementation of responsive and scalable interfaces using React, Next.js, TypeScript, and Tailwind CSS, improving performance and user experience.",
+          "Collaboration in agile squads with product, design, and back-end teams to deliver new features and ensure efficient API integration.",
+          "Active contribution to code quality through best practices, refactoring, and architectural consistency."
+        ]
+      },
+      {
+        "title": "External Relations Director and Front-End Manager",
+        "company": "TITAN - UFBA Computer Engineering Junior Enterprise",
+        "period": "Sep/2023 - Present",
+        "description": [
+          "Front-end leadership in web project development, including institutional websites and event landing pages.",
+          "Team leadership and project coordination, acting as President and External Relations Director.",
+          "Institutional representation with partners, university departments, and in the Junior Enterprise Movement."
+        ]
+      }
+    ]
+  },
+  "Featured": {
+    "eyebrow": "Featured work",
+    "title": "Selected projects",
+    "viewAll": "View all",
+    "featuredBadge": "Featured",
+    "githubAria": "GitHub repository",
+    "liveDemoAria": "Live demo"
+  },
+  "Tech": {
+    "eyebrow": "Technologies",
+    "title": "Tech stack"
+  },
+  "Projects": {
+    "title": "Projects",
+    "subtitle": "A collection of projects I built and contributed to.",
+    "searchPlaceholder": "Search projects, technologies...",
+    "allCategory": "All",
+    "count": "{count} project",
+    "count_plural": "{count} projects",
+    "empty": "No projects found."
+  },
+  "ProjectDetail": {
+    "back": "Back",
+    "liveDemo": "Live demo",
+    "overview": "Overview",
+    "technologies": "Technologies"
+  },
+  "NotFound": {
+    "terminal": "page not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to home"
+  },
+  "Admin": {
+    "title": "Admin Dashboard",
+    "subtitle": "Manage portfolio projects",
+    "logout": "Sign out",
+    "statsProjects": "Total projects",
+    "statsViews": "Total views",
+    "statsLikes": "Total likes",
+    "tabProjects": "Projects",
+    "tabNew": "New project",
+    "tabEdit": "Edit project",
+    "searchPlaceholder": "Search projects...",
+    "emptyHint": "Your dashboard is ready for the first case study.",
+    "newProject": "New project",
+    "tableProject": "Project",
+    "tableCategory": "Category",
+    "tableYear": "Year",
+    "tableActions": "Actions",
+    "noMatchesTerminal": "no matches found",
+    "noMatchesTitle": "No projects match your search",
+    "noMatchesDescription": "Try searching by another name, category, or year. The filter is active, but no match was found for",
+    "clearSearch": "Clear search",
+    "noProjectsTerminal": "no projects found",
+    "noProjectsTitle": "Your showcase starts here",
+    "noProjectsDescription": "There are no projects yet. Create your first item to populate the dashboard and reflect it on the home page.",
+    "createFirst": "Create first project",
+    "deleteTitle": "Are you sure?",
+    "deleteDescription": "This action cannot be undone. It will permanently delete this project from your portfolio.",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "formEditTitle": "Edit project",
+    "formNewTitle": "New project",
+    "fieldTitle": "Title *",
+    "fieldCategory": "Category",
+    "fieldTags": "Tech stack",
+    "fieldDescription": "Description",
+    "fieldRepo": "GitHub URL",
+    "fieldLive": "Live demo URL",
+    "fieldCover": "Project cover (upload)",
+    "fieldFeatured": "Featured project",
+    "selectPlaceholder": "Select...",
+    "tagsPlaceholder": "React, Next",
+    "replaceImage": "Replace image",
+    "uploadImage": "Upload image",
+    "saving": "Saving...",
+    "saveChanges": "Save changes",
+    "createProject": "Create project",
+    "toastDeleting": "Deleting project...",
+    "toastDeleteSuccess": "Project deleted successfully!",
+    "toastDeleteError": "Error deleting project.",
+    "toastUpdating": "Updating...",
+    "toastSaving": "Saving...",
+    "toastUpdateSuccess": "Updated successfully!",
+    "toastCreateSuccess": "Created successfully!",
+    "toastSaveError": "Error saving data.",
+    "loginTitle": "Restricted access",
+    "loginSubtitle": "Sign in with your admin email",
+    "email": "Email",
+    "password": "Password",
+    "login": "Sign in",
+    "loggingIn": "Signing in...",
+    "toastChecking": "Checking credentials...",
+    "toastLoginSuccess": "Logged in successfully!",
+    "toastLoginError": "Error during login."
+  }
+}

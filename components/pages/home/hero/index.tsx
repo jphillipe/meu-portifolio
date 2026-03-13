@@ -4,11 +4,14 @@ import { developerProfile } from '@/data/mock'
 import { ArrowRight, Mail, Linkedin } from 'lucide-react'
 import { SiGithub } from '@icons-pack/react-simple-icons'
 import { TypingEffect } from './TypingEffect'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { Button } from '@/components/ui/button'
 import { ComponentType } from 'react'
+import { useTranslations } from 'next-intl'
 
 export default function Hero() {
+  const t = useTranslations('Hero')
+
   const socialItems: {
     icon: ComponentType<{ className?: string }>
     href: string
@@ -39,7 +42,7 @@ export default function Hero() {
             className="bg-zinc-800/60 h-8 rounded-md! text-zinc-400 border border-zinc-700/50 px-4 py-1.5 text-xs font-normal"
           >
             <span className="w-2 h-2 rounded-full bg-emerald-400 mr-2 inline-block animate-pulse" />
-            Available for new projects
+            {t('available')}
           </Badge>
         </div>
 
@@ -50,14 +53,12 @@ export default function Hero() {
 
         {/* Typing subtitle */}
         <div className="animate-fade-in-up animation-delay-200 text-xl sm:text-2xl text-zinc-400 mb-4 font-light h-9">
-          <TypingEffect text={developerProfile.title} speed={70} />
+          <TypingEffect text={t('role')} speed={70} />
         </div>
 
         <p className="animate-fade-in-up animation-delay-300 text-base sm:text-lg text-zinc-500 max-w-2xl mx-auto mb-8 leading-relaxed">
-          {developerProfile.tagline}
-          <span className="hidden sm:inline">
-            . Specializing in React, Node.js, and cloud architecture.
-          </span>
+          {t('tagline')}
+          <span className="hidden sm:inline">. {t('specializing')}</span>
         </p>
 
         {/* Social */}
@@ -80,7 +81,7 @@ export default function Hero() {
         <div className="animate-fade-in-up animation-delay-500 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
           <Link href="/projects" className="w-full sm:w-auto">
             <Button className="w-full sm:w-auto bg-white text-zinc-900 hover:bg-zinc-200 font-medium px-6 h-11 text-sm group">
-              View Projects{' '}
+              {t('viewProjects')}{' '}
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>
@@ -92,7 +93,7 @@ export default function Hero() {
               variant="outline"
               className="w-full sm:w-auto border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100 font-medium px-6 h-11 text-sm"
             >
-              Get in Touch
+              {t('getInTouch')}
             </Button>
           </a>
         </div>

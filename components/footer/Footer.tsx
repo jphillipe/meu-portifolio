@@ -2,9 +2,10 @@ import React, { ComponentType } from 'react'
 import { Terminal, Mail, Linkedin } from 'lucide-react'
 import { SiGithub } from '@icons-pack/react-simple-icons'
 import { Separator } from '../ui/separator'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { developerProfile } from '@/data/mock'
 import { TitanEasterEgg } from '../easter-egg/TitanEasterEgg'
+import { useTranslations } from 'next-intl'
 
 interface SocialLink {
   icon: ComponentType<{ className?: string }>
@@ -13,6 +14,9 @@ interface SocialLink {
 }
 
 const Footer: React.FC = () => {
+  const t = useTranslations('Footer')
+  const heroT = useTranslations('Hero')
+
   const socialLinks: SocialLink[] = [
     {
       icon: SiGithub,
@@ -41,37 +45,41 @@ const Footer: React.FC = () => {
               </span>
             </Link>
             <p className="text-sm text-zinc-500 leading-relaxed max-w-xs">
-              {developerProfile.title} based in {developerProfile.location}.
-              Building software that makes a difference.
+              {t('about', {
+                title: heroT('role'),
+                location: developerProfile.location,
+              })}
             </p>
           </div>
           <div>
             <h4 className="text-sm font-medium text-zinc-300 mb-4">
-              Navigation
+              {t('navigation')}
             </h4>
             <div className="flex flex-col gap-3">
               <Link
                 href="/"
                 className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors"
               >
-                Home
+                {t('home')}
               </Link>
               <Link
                 href="/projects"
                 className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors"
               >
-                Projects
+                {t('projects')}
               </Link>
               <a
                 href={`mailto:${developerProfile.email}`}
                 className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors"
               >
-                Contact
+                {t('contact')}
               </a>
             </div>
           </div>
           <div>
-            <h4 className="text-sm font-medium text-zinc-300 mb-4">Connect</h4>
+            <h4 className="text-sm font-medium text-zinc-300 mb-4">
+              {t('connect')}
+            </h4>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
                 <a
@@ -91,8 +99,10 @@ const Footer: React.FC = () => {
         <Separator className="my-8 bg-zinc-800/50" />
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-zinc-600">
-            &copy; {new Date().getFullYear()} {developerProfile.name}. All
-            rights reserved.
+            {t('rights', {
+              year: new Date().getFullYear(),
+              name: developerProfile.name,
+            })}
           </p>
           <TitanEasterEgg />
         </div>
