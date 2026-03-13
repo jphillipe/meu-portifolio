@@ -8,6 +8,7 @@ import { prisma } from '@/lib/prisma'
 import Image from 'next/image'
 import { cookies } from 'next/headers'
 import { LikeButton } from './_components/likeButton'
+import { ViewTracker } from './_components/viewTracker'
 
 export default async function ProjectDetailPage({
   params,
@@ -22,7 +23,7 @@ export default async function ProjectDetailPage({
     where: { id: id },
     include: {
       _count: {
-        select: { likes: true },
+        select: { likes: true, views: true },
       },
     },
   })
@@ -50,6 +51,7 @@ export default async function ProjectDetailPage({
 
   return (
     <div className="min-h-screen">
+      <ViewTracker projectId={id} />
       <section className="relative">
         <div className="aspect-3/1 max-h-100 w-full overflow-hidden bg-zinc-900">
           {project.imageUrl ? (
@@ -97,7 +99,7 @@ export default async function ProjectDetailPage({
               <Calendar className="h-4 w-4" /> {year}
             </span>
             <span className="flex items-center gap-1.5">
-              <Eye className="h-4 w-4" /> 150
+              <Eye className="h-4 w-4" /> {project._count.views}
             </span>
             <LikeButton
               projectId={project.id}
