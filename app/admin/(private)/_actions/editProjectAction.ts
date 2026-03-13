@@ -6,22 +6,13 @@ import { revalidatePath } from 'next/cache'
 import z from 'zod'
 import { zfd } from 'zod-form-data'
 
-const projectSchema = zfd.formData({
-  title: zfd.text(
-    z
-      .string({ message: 'Título é obrigatório' })
-      .min(4, { message: 'Título deve ter no mínimo 4 caracteres' }),
-  ),
+const editProjectSchema = zfd.formData({
+  id: zfd.text(z.string()),
+  title: zfd.text(z.string().min(4, { message: 'Mínimo de 4 caracteres' })),
   description: zfd.text(
-    z
-      .string({ message: 'Descrição é obrigatória' })
-      .min(4, { message: 'Descrição deve ter no mínimo 4 caracteres' }),
+    z.string().min(4, { message: 'Mínimo de 4 caracteres' }),
   ),
-  category: zfd.text(
-    z
-      .string({ message: 'Categoria é obrigatória' })
-      .min(1, 'Categoria é obrigatória'),
-  ),
+  category: zfd.text(z.string().min(1, 'Categoria é obrigatória')),
   imageUrl: zfd.text(z.string().optional()),
   repoUrl: zfd.text(z.string().optional()),
   liveUrl: zfd.text(z.string().optional()),
@@ -29,8 +20,8 @@ const projectSchema = zfd.formData({
   featured: z.unknown().transform((val) => val === 'true' || val === 'on'),
 })
 
-export const createProjectAction = authActionClient
-  .inputSchema(projectSchema)
+export const editProjectAction = authActionClient
+  .inputSchema(editProjectSchema)
   .action(async ({ parsedInput }) => {
     const tagsArray = parsedInput.tags
       ? parsedInput.tags
@@ -39,7 +30,8 @@ export const createProjectAction = authActionClient
           .filter(Boolean)
       : []
 
-    const newProject = await prisma.project.create({
+    const updatedProject = await prisma.project.update({
+      where: { id: parsedInput.id },
       data: {
         title: parsedInput.title,
         description: parsedInput.description,
@@ -55,5 +47,5 @@ export const createProjectAction = authActionClient
     revalidatePath('/admin')
     revalidatePath('/')
 
-    return { success: true, project: newProject }
+    return { success: true, project: updatedProject }
   })

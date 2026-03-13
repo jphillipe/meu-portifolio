@@ -18,66 +18,86 @@ import { useAction } from 'next-safe-action/hooks'
 import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useRef } from 'react'
+import { ProjectWithYear } from './projects-tabs'
+import { editProjectAction } from '../_actions/editProjectAction'
 
 type ProjectFormProps = {
   onSuccess?: () => void
+  initialData?: ProjectWithYear
 }
 
-export function ProjectForm({ onSuccess }: ProjectFormProps) {
+export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
   const inputClass =
     'bg-zinc-800/50 border-zinc-700 text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600'
   const MOCK_CATEGORIES = ['Front-end', 'Back-end', 'Full Stack', 'Mobile']
 
   const formRef = useRef<HTMLFormElement>(null)
 
-  const { executeAsync, result, isPending } = useAction(createProjectAction)
+  const createAction = useAction(createProjectAction)
+  const editAction = useAction(editProjectAction)
+
+  const isPending = createAction.isPending || editAction.isPending
+  const result = initialData ? editAction.result : createAction.result
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
 
-    const toastId = toast.loading('Salvando projeto no banco de dados...')
-    const response = await executeAsync(formData)
+    if (initialData) {
+      formData.append('id', initialData.id)
+    }
+
+    const toastId = toast.loading(
+      initialData ? 'Atualizando...' : 'Salvando...',
+    )
+
+    const response = initialData
+      ? await editAction.executeAsync(formData)
+      : await createAction.executeAsync(formData)
 
     if (response?.data?.success) {
-      toast.success('Projeto criado com sucesso! 🚀', { id: toastId })
+      toast.success(
+        initialData ? 'Atualizado com sucesso! 🚀' : 'Criado com sucesso! 🚀',
+        { id: toastId },
+      )
       formRef.current?.reset()
-      onSuccess?.()
+      if (onSuccess) onSuccess()
     } else {
-      toast.error('Erro ao salvar. Verifique os campos em vermelho.', {
-        id: toastId,
-      })
+      toast.error('Erro ao salvar os dados.', { id: toastId })
     }
   }
 
   return (
     <form ref={formRef} onSubmit={handleSubmit}>
       <div className="rounded-xl border border-zinc-800/50 bg-zinc-900/20 p-6 space-y-6">
-        <h2 className="text-lg font-semibold text-zinc-100">Novo Projeto</h2>
+        <h2 className="text-lg font-semibold text-zinc-100">
+          {initialData ? 'Editar Projeto' : 'Novo Projeto'}
+        </h2>
         <Separator className="bg-zinc-800/50" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="title" className="text-zinc-400 text-sm">
-              Título *
-            </Label>
+            <Label htmlFor="title">Título *</Label>
+
             <Input
               id="title"
               name="title"
-              placeholder="Nome do projeto"
+              defaultValue={initialData?.title}
               className={inputClass}
             />
             {result.validationErrors?.title && (
-              <p className="text-xs text-red-500 mt-1">
+              <p className="text-xs text-red-500">
                 {result.validationErrors.title._errors}
               </p>
             )}
           </div>
+
           <div className="space-y-2">
-            <Label htmlFor="category" className="text-zinc-400 text-sm">
-              Categoria
-            </Label>
-            <Select name="category">
+            <Label htmlFor="category">Categoria</Label>
+            <Select
+              name="category"
+              defaultValue={initialData?.category || undefined}
+            >
               <SelectTrigger
                 id="category"
                 className="bg-zinc-800/50 border-zinc-700 w-full text-zinc-100"
@@ -86,51 +106,41 @@ export function ProjectForm({ onSuccess }: ProjectFormProps) {
               </SelectTrigger>
               <SelectContent className="bg-zinc-900 border-zinc-700">
                 {MOCK_CATEGORIES.map((cat) => (
-                  <SelectItem
-                    key={cat}
-                    value={cat}
-                    className="text-zinc-300 focus:bg-zinc-800 focus:text-zinc-100"
-                  >
+                  <SelectItem key={cat} value={cat} className="text-zinc-300">
                     {cat}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             {result.validationErrors?.category && (
-              <p className="text-xs text-red-500 mt-1">
+              <p className="text-xs text-red-500">
                 {result.validationErrors.category._errors}
               </p>
             )}
           </div>
+
           <div className="space-y-2">
-            <Label htmlFor="techStack" className="text-zinc-400 text-sm">
-              Tech Stack (separado por vírgula)
-            </Label>
+            <Label htmlFor="tags">Tech Stack</Label>
             <Input
               id="tags"
               name="tags"
-              placeholder="React, Node.js, PostgreSQL"
+              defaultValue={initialData?.tags.join(', ')}
+              placeholder="React, Next"
               className={inputClass}
             />
-            {result.validationErrors?.tags && (
-              <p className="text-xs text-red-500 mt-1">
-                {result.validationErrors.tags._errors}
-              </p>
-            )}
           </div>
         </div>
+
         <div className="space-y-2">
-          <Label htmlFor="description" className="text-zinc-400 text-sm">
-            Descrição
-          </Label>
+          <Label htmlFor="description">Descrição</Label>
           <Textarea
             id="description"
             name="description"
-            placeholder="Descrição detalhada"
-            className={`${inputClass} min-h-30 resize-none`}
+            defaultValue={initialData?.description}
+            className={`${inputClass} min-h-30`}
           />
           {result.validationErrors?.description && (
-            <p className="text-xs text-red-500 mt-1">
+            <p className="text-xs text-red-500">
               {result.validationErrors.description._errors}
             </p>
           )}
@@ -138,66 +148,43 @@ export function ProjectForm({ onSuccess }: ProjectFormProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="githubUrl" className="text-zinc-400 text-sm">
-              GitHub URL
-            </Label>
+            <Label htmlFor="repoUrl">GitHub URL</Label>
             <Input
               id="repoUrl"
               name="repoUrl"
-              placeholder="https://github.com/..."
+              defaultValue={initialData?.repoUrl || ''}
               className={inputClass}
             />
-            {result.validationErrors?.repoUrl && (
-              <p className="text-xs text-red-500 mt-1">
-                {result.validationErrors.repoUrl._errors}
-              </p>
-            )}
           </div>
           <div className="space-y-2">
-            <Label htmlFor="liveUrl" className="text-zinc-400 text-sm">
-              Live Demo URL
-            </Label>
+            <Label htmlFor="liveUrl">Live Demo URL</Label>
             <Input
               id="liveUrl"
               name="liveUrl"
-              placeholder="https://..."
+              defaultValue={initialData?.liveUrl || ''}
               className={inputClass}
             />
-            {result.validationErrors?.liveUrl && (
-              <p className="text-xs text-red-500 mt-1">
-                {result.validationErrors.liveUrl._errors}
-              </p>
-            )}
           </div>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="thumbnail" className="text-zinc-400 text-sm">
-            URL da Thumbnail
-          </Label>
+          <Label htmlFor="imageUrl">URL da Thumbnail</Label>
           <Input
             id="imageUrl"
             name="imageUrl"
-            placeholder="https://images.unsplash.com/..."
+            defaultValue={initialData?.imageUrl || ''}
             className={inputClass}
           />
-          {result.validationErrors?.imageUrl && (
-            <p className="text-xs text-red-500 mt-1">
-              {result.validationErrors.imageUrl._errors}
-            </p>
-          )}
         </div>
 
         <div className="flex items-center gap-3">
-          <Switch id="featured" name="featured" value="on" />
-          <Label htmlFor="featured" className="text-zinc-400 text-sm">
-            Projeto em Destaque
-          </Label>
-          {result.validationErrors?.featured && (
-            <p className="text-xs text-red-500 mt-1">
-              {result.validationErrors.featured._errors}
-            </p>
-          )}
+          <Switch
+            id="featured"
+            name="featured"
+            value="on"
+            defaultChecked={initialData?.featured}
+          />
+          <Label htmlFor="featured">Projeto em Destaque</Label>
         </div>
 
         <Separator className="bg-zinc-800/50" />
@@ -206,7 +193,8 @@ export function ProjectForm({ onSuccess }: ProjectFormProps) {
           <Button
             type="button"
             variant="outline"
-            className="border-zinc-700 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200"
+            onClick={onSuccess}
+            className="border-zinc-700 text-zinc-400"
           >
             Cancelar
           </Button>
@@ -217,8 +205,10 @@ export function ProjectForm({ onSuccess }: ProjectFormProps) {
           >
             {isPending ? (
               <span className="flex items-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin" /> Criando...
+                <Loader2 className="h-4 w-4 animate-spin" /> Salvando...
               </span>
+            ) : initialData ? (
+              'Salvar Alterações'
             ) : (
               'Criar Projeto'
             )}

@@ -20,10 +20,13 @@ import { DeleteDialog } from './dialog'
 
 export function ProjectsList({
   projects,
-  onButtonClick,
+  onNewProject,
+  onEditProject,
 }: {
   projects: ProjectWithYear[]
-  onButtonClick: () => void
+
+  onNewProject: () => void
+  onEditProject: (_project: ProjectWithYear) => void
 }) {
   const hasProjects = projects.length > 0
   const inputClass =
@@ -65,7 +68,7 @@ export function ProjectsList({
         <Button
           className="bg-white text-zinc-900 hover:bg-zinc-200 gap-2"
           size="sm"
-          onClick={onButtonClick}
+          onClick={onNewProject}
         >
           <Plus className="h-4 w-4" /> Novo Projeto
         </Button>
@@ -114,6 +117,7 @@ export function ProjectsList({
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 text-zinc-400 hover:text-zinc-200"
+                        onClick={() => onEditProject?.(project)}
                       >
                         <Pencil className="h-3.5 w-3.5" />
                       </Button>
@@ -149,7 +153,7 @@ export function ProjectsList({
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row">
               <Button
                 className="bg-white text-zinc-900 hover:bg-zinc-200 gap-2"
-                onClick={onButtonClick}
+                onClick={onNewProject}
               >
                 <Plus className="h-4 w-4" /> Criar primeiro projeto
               </Button>
