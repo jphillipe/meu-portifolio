@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { Plus, Search, Pencil, Trash2 } from 'lucide-react'
@@ -13,14 +12,20 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { ProjectWithYear } from './projects-tabs'
 
-export function ProjectsList({ projects }: { projects: any[] }) {
+export function ProjectsList({
+  projects,
+  onButtonClick,
+}: {
+  projects: ProjectWithYear[]
+  onButtonClick: () => void
+}) {
   const inputClass =
     'bg-zinc-800/50 border-zinc-700 text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600'
 
   return (
     <>
-      {/* Barra de Busca e Ações */}
       <div className="flex items-center justify-between mb-4 gap-4">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
@@ -32,12 +37,12 @@ export function ProjectsList({ projects }: { projects: any[] }) {
         <Button
           className="bg-white text-zinc-900 hover:bg-zinc-200 gap-2"
           size="sm"
+          onClick={onButtonClick}
         >
           <Plus className="h-4 w-4" /> Novo Projeto
         </Button>
       </div>
 
-      {/* Tabela */}
       <div className="rounded-xl border border-zinc-800/50 overflow-hidden">
         <Table>
           <TableHeader>

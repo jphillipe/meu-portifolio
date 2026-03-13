@@ -3,14 +3,18 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ProjectsList } from './projects-list'
 import { ProjectForm } from './project-form'
+import { Project } from '@/lib/generated/prisma/client'
+import { useState } from 'react'
 
-interface ProjectsTabsProps {
-  initialProjects: unknown[]
+export type ProjectWithYear = Project & {
+  year: number
 }
 
-export function ProjectsTabs({ initialProjects }: ProjectsTabsProps) {
+export function ProjectsTabs({ projects }: { projects: ProjectWithYear[] }) {
+  const [activeTab, setActiveTab] = useState('projects')
+
   return (
-    <Tabs defaultValue="projects">
+    <Tabs value={activeTab} onValueChange={setActiveTab}>
       <TabsList className="bg-zinc-900/50 border border-zinc-800/50">
         <TabsTrigger
           value="projects"
@@ -27,11 +31,14 @@ export function ProjectsTabs({ initialProjects }: ProjectsTabsProps) {
       </TabsList>
 
       <TabsContent value="projects" className="mt-6">
-        <ProjectsList projects={initialProjects} />
+        <ProjectsList
+          onButtonClick={() => setActiveTab('create')}
+          projects={projects}
+        />
       </TabsContent>
 
       <TabsContent value="create" className="mt-6">
-        <ProjectForm />
+        <ProjectForm onSuccess={() => setActiveTab('projects')} />
       </TabsContent>
     </Tabs>
   )

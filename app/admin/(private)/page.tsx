@@ -2,30 +2,21 @@ import { LayoutDashboard, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { DashboardStats } from './_components/dashboardStats'
 import { ProjectsTabs } from './_components/projects-tabs'
-
-const MOCK_PROJECTS = [
-  {
-    id: '1',
-    title: 'Plataforma de E-commerce',
-    category: 'Full Stack',
-    year: 2024,
-    featured: true,
-    views: 1250,
-  },
-  {
-    id: '2',
-    title: 'App de Gestão Financeira',
-    category: 'Mobile',
-    year: 2023,
-    featured: false,
-    views: 890,
-  },
-]
+import { prisma } from '@/lib/prisma'
 
 export default async function AdminDashboardPage() {
-  const projects = MOCK_PROJECTS
+  const dbProjects = await prisma.project.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
 
-  const totalViews = projects.reduce((acc, p) => acc + p.views, 0)
+  const projects = dbProjects.map((project) => ({
+    ...project,
+    year: project.createdAt.getFullYear(),
+  }))
+
+  const totalViews = 0
 
   return (
     <div className="min-h-screen py-8 px-6">
@@ -51,10 +42,10 @@ export default async function AdminDashboardPage() {
         <DashboardStats
           totalProjects={projects.length}
           totalViews={totalViews}
-          totalLikes={460} // Mockado por enquanto
+          totalLikes={460}
         />
 
-        <ProjectsTabs initialProjects={projects} />
+        <ProjectsTabs projects={projects} />
       </div>
     </div>
   )

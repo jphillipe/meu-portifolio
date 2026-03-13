@@ -19,7 +19,11 @@ import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useRef } from 'react'
 
-export function ProjectForm() {
+type ProjectFormProps = {
+  onSuccess?: () => void
+}
+
+export function ProjectForm({ onSuccess }: ProjectFormProps) {
   const inputClass =
     'bg-zinc-800/50 border-zinc-700 text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-600'
   const MOCK_CATEGORIES = ['Front-end', 'Back-end', 'Full Stack', 'Mobile']
@@ -38,6 +42,7 @@ export function ProjectForm() {
     if (response?.data?.success) {
       toast.success('Projeto criado com sucesso! 🚀', { id: toastId })
       formRef.current?.reset()
+      onSuccess?.()
     } else {
       toast.error('Erro ao salvar. Verifique os campos em vermelho.', {
         id: toastId,
