@@ -1,20 +1,15 @@
 'use client'
 
 import { Github, ExternalLink, Eye, Heart, Star } from 'lucide-react'
-import { Project } from '@/types'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { motion, useAnimation } from 'framer-motion'
+import { Project } from '@/lib/generated/prisma/client'
 
-interface ProjectCardProps {
-  project: Project
-  index?: number
-}
-
-export const ProjectCard = ({ project }: ProjectCardProps) => {
-  const totalViews = project.views
-  const totalLikes = project.likes
+export const ProjectCard = ({ project }: { project: Project }) => {
+  const totalViews = 0
+  const totalLikes = 0
   const shineControls = useAnimation()
 
   const handleHoverStart = async () => {
@@ -26,7 +21,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
   }
 
   return (
-    <Link href={`/projects/${project.slug}`} className="group block">
+    <Link href={`/projects/${project.id}`} className="group block">
       <motion.div
         className="relative rounded-xl border border-zinc-800/50 bg-zinc-900/30 overflow-hidden"
         whileHover={{
@@ -52,7 +47,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
         {/* Image */}
         <div className="aspect-video overflow-hidden bg-zinc-900 relative">
           <Image
-            src={project.thumbnail}
+            src={project.imageUrl ?? '/placeholder.png'}
             alt={project.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
@@ -76,17 +71,17 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
               {project.title}
             </h3>
             <span className="text-xs text-zinc-600 shrink-0 font-mono">
-              {project.year}
+              {project.createdAt.getFullYear()}
             </span>
           </div>
 
           <p className="text-sm text-zinc-400 leading-relaxed mb-4 line-clamp-2 group-hover:text-zinc-300 transition-colors">
-            {project.shortDescription}
+            {project.description}
           </p>
 
           {/* Tech Stack */}
           <div className="flex flex-wrap gap-1.5 mb-4">
-            {project.techStack.slice(0, 4).map((tech) => (
+            {project.tags.slice(0, 4).map((tech) => (
               <Badge
                 key={tech}
                 variant="secondary"
@@ -95,12 +90,12 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 {tech}
               </Badge>
             ))}
-            {project.techStack.length > 4 && (
+            {project.tags.length > 4 && (
               <Badge
                 variant="secondary"
                 className="bg-zinc-800/80 text-zinc-500 border-0 text-xs font-normal"
               >
-                +{project.techStack.length - 4}
+                +{project.tags.length - 4}
               </Badge>
             )}
           </div>
@@ -109,16 +104,8 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
           <div className="flex items-center justify-between pt-3 border-t border-zinc-800/50">
             <div className="flex items-center gap-4 text-xs text-zinc-500">
               <span className="flex items-center gap-1.5 group-hover:text-zinc-400 transition-colors">
-                <Eye className="h-3.5 w-3.5" />
-                {totalViews.toLocaleString()}
-              </span>
-              <span className="flex items-center gap-1.5 group-hover:text-zinc-400 transition-colors">
                 <Heart className="h-3.5 w-3.5" />
                 {totalLikes}
-              </span>
-              <span className="flex items-center gap-1.5 group-hover:text-zinc-400 transition-colors">
-                <Star className="h-3.5 w-3.5" />
-                {project.stars}
               </span>
             </div>
 
@@ -126,12 +113,12 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
               className="flex items-center gap-2"
               onClick={(e) => e.stopPropagation()}
             >
-              {project.githubUrl && (
+              {typeof project.repoUrl === 'string' && (
                 <button
                   onClick={(e) => {
                     e.preventDefault()
                     window.open(
-                      project.githubUrl,
+                      project.repoUrl as string,
                       '_blank',
                       'noopener,noreferrer',
                     )
@@ -142,12 +129,12 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                   <Github className="h-4 w-4" />
                 </button>
               )}
-              {project.liveUrl && (
+              {typeof project.liveUrl === 'string' && (
                 <button
                   onClick={(e) => {
                     e.preventDefault()
                     window.open(
-                      project.liveUrl,
+                      project.liveUrl as string,
                       '_blank',
                       'noopener,noreferrer',
                     )

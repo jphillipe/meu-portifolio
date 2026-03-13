@@ -1,5 +1,8 @@
 'use client'
 
+import { useState, useRef } from 'react' // Adicionado useState
+import Image from 'next/image' // Adicionado para o preview
+import { CldUploadWidget } from 'next-cloudinary' // Adicionado componente do Cloudinary
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -15,9 +18,8 @@ import {
 } from '@/components/ui/select'
 import { createProjectAction } from '../_actions/addProjectAction'
 import { useAction } from 'next-safe-action/hooks'
-import { Loader2 } from 'lucide-react'
+import { Loader2, UploadCloud } from 'lucide-react' // Adicionado UploadCloud
 import { toast } from 'sonner'
-import { useRef } from 'react'
 import { ProjectWithYear } from './projects-tabs'
 import { editProjectAction } from '../_actions/editProjectAction'
 
@@ -33,11 +35,17 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
 
   const formRef = useRef<HTMLFormElement>(null)
 
+  // ESTADO ADICIONADO: Guarda a URL da imagem atual
+  const [uploadedImage, setUploadedImage] = useState(
+    initialData?.imageUrl || '',
+  )
+
   const createAction = useAction(createProjectAction)
   const editAction = useAction(editProjectAction)
 
   const isPending = createAction.isPending || editAction.isPending
-  const result = initialData ? editAction.result : createAction.result
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const result: any = initialData ? editAction.result : createAction.result
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -61,6 +69,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
         { id: toastId },
       )
       formRef.current?.reset()
+      setUploadedImage('')
       if (onSuccess) onSuccess()
     } else {
       toast.error('Erro ao salvar os dados.', { id: toastId })
@@ -85,7 +94,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
               defaultValue={initialData?.title}
               className={inputClass}
             />
-            {result.validationErrors?.title && (
+            {result?.validationErrors?.title && (
               <p className="text-xs text-red-500">
                 {result.validationErrors.title._errors}
               </p>
@@ -112,7 +121,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
                 ))}
               </SelectContent>
             </Select>
-            {result.validationErrors?.category && (
+            {result?.validationErrors?.category && (
               <p className="text-xs text-red-500">
                 {result.validationErrors.category._errors}
               </p>
@@ -139,7 +148,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
             defaultValue={initialData?.description}
             className={`${inputClass} min-h-30`}
           />
-          {result.validationErrors?.description && (
+          {result?.validationErrors?.description && (
             <p className="text-xs text-red-500">
               {result.validationErrors.description._errors}
             </p>
@@ -167,15 +176,47 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
           </div>
         </div>
 
+        {/* --- MODIFICADO: ÁREA DO CLOUDINARY --- */}
         <div className="space-y-2">
-          <Label htmlFor="imageUrl">URL da Thumbnail</Label>
-          <Input
-            id="imageUrl"
-            name="imageUrl"
-            defaultValue={initialData?.imageUrl || ''}
-            className={inputClass}
-          />
+          <Label>Capa do Projeto (Upload)</Label>
+
+          {/* Input oculto que o Zod vai capturar no submit */}
+          <input type="hidden" name="imageUrl" value={uploadedImage} />
+
+          <div className="flex items-center gap-4">
+            {uploadedImage && (
+              <div className="relative w-32 h-20 rounded-lg overflow-hidden border border-zinc-700">
+                <Image
+                  src={uploadedImage}
+                  alt="Preview"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            )}
+
+            <CldUploadWidget
+              uploadPreset="meu-portifolio"
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onSuccess={(result: any) => {
+                setUploadedImage(result?.info?.secure_url)
+              }}
+            >
+              {({ open }) => (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => open()}
+                  className="bg-zinc-800/50 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:text-zinc-100 gap-2"
+                >
+                  <UploadCloud className="w-4 h-4" />
+                  {uploadedImage ? 'Trocar Imagem' : 'Fazer Upload'}
+                </Button>
+              )}
+            </CldUploadWidget>
+          </div>
         </div>
+        {/* -------------------------------------- */}
 
         <div className="flex items-center gap-3">
           <Switch

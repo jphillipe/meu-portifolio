@@ -1,11 +1,11 @@
 'use client'
-import { projects } from '@/data/mock'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { ProjectCard } from './card'
 import { motion } from 'framer-motion'
+import { Project } from '@/lib/generated/prisma/client'
 
-export const Featured = () => {
+export const Featured = ({ projects }: { projects: Project[] }) => {
   const featuredProjects = projects.filter((p) => p.featured).slice(0, 4)
   return (
     <section className="py-24 px-6">
@@ -46,7 +46,7 @@ export const Featured = () => {
                 ease: 'easeOut',
               }}
             >
-              <ProjectCard project={project} index={index} />
+              <ProjectCard project={project} />
             </motion.div>
           ))}
         </div>
