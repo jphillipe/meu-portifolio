@@ -5,7 +5,12 @@ import { ProjectCard } from './card'
 import { motion } from 'framer-motion'
 import { Project } from '@/lib/generated/prisma/client'
 
-export const Featured = ({ projects }: { projects: Project[] }) => {
+export type ProjectWithCounts = Project & {
+  _count: {
+    likes: number
+  }
+}
+export const Featured = ({ projects }: { projects: ProjectWithCounts[] }) => {
   const featuredProjects = projects.filter((p) => p.featured).slice(0, 4)
   return (
     <section className="py-24 px-6">
@@ -46,7 +51,10 @@ export const Featured = ({ projects }: { projects: Project[] }) => {
                 ease: 'easeOut',
               }}
             >
-              <ProjectCard project={project} />
+              <ProjectCard
+                project={project}
+                totalLikes={project._count.likes}
+              />
             </motion.div>
           ))}
         </div>

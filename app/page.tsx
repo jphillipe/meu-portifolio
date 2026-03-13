@@ -11,6 +11,11 @@ export default async function Home() {
     where: {
       featured: true,
     },
+    include: {
+      _count: {
+        select: { likes: true },
+      },
+    },
     orderBy: {
       createdAt: 'desc',
     },

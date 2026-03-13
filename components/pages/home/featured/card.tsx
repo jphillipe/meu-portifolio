@@ -1,6 +1,6 @@
 'use client'
 
-import { Github, ExternalLink, Eye, Heart, Star } from 'lucide-react'
+import { Github, ExternalLink, Heart } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
