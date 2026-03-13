@@ -6,6 +6,11 @@ export default async function Porjects() {
     orderBy: {
       createdAt: 'desc',
     },
+    include: {
+      _count: {
+        select: { likes: true },
+      },
+    },
   })
 
   return <ProjectsClient projects={allProjects} />

@@ -7,8 +7,13 @@ import { Badge } from '@/components/ui/badge'
 import { motion, useAnimation } from 'framer-motion'
 import { Project } from '@/lib/generated/prisma/client'
 
-export const ProjectCard = ({ project }: { project: Project }) => {
-  const totalLikes = 0
+export const ProjectCard = ({
+  project,
+  totalLikes,
+}: {
+  project: Project
+  totalLikes: number
+}) => {
   const shineControls = useAnimation()
 
   const handleHoverStart = async () => {

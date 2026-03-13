@@ -17,7 +17,9 @@ export default async function AdminDashboardPage() {
     year: project.createdAt.getFullYear(),
   }))
 
-  const totalViews = 0
+  const totalLikes = await prisma.like.count()
+
+  const totalViews = await prisma.view.count()
 
   return (
     <div className="min-h-screen py-8 px-6">
@@ -46,7 +48,7 @@ export default async function AdminDashboardPage() {
         <DashboardStats
           totalProjects={projects.length}
           totalViews={totalViews}
-          totalLikes={460}
+          totalLikes={totalLikes}
         />
 
         <ProjectsTabs projects={projects} />

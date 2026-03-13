@@ -6,7 +6,17 @@ import { Input } from '@/components/ui/input'
 import { Project } from '@/lib/generated/prisma/client'
 import { ProjectCard } from '@/components/pages/home/featured/card'
 
-export function ProjectsClient({ projects }: { projects: Project[] }) {
+export type ProjectWithCounts = Project & {
+  _count: {
+    likes: number
+  }
+}
+
+export function ProjectsClient({
+  projects,
+}: {
+  projects: ProjectWithCounts[]
+}) {
   const [search, setSearch] = useState<string>('')
   const [activeCategory, setActiveCategory] = useState<string>('All')
 
@@ -79,7 +89,11 @@ export function ProjectsClient({ projects }: { projects: Project[] }) {
         {filteredProjects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                totalLikes={project._count.likes}
+              />
             ))}
           </div>
         ) : (

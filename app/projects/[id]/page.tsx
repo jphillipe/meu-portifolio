@@ -1,18 +1,13 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import {
-  ArrowLeft,
-  Github,
-  ExternalLink,
-  Calendar,
-  Eye,
-  Heart,
-} from 'lucide-react'
+import { ArrowLeft, Github, ExternalLink, Calendar, Eye } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { prisma } from '@/lib/prisma'
 import Image from 'next/image'
+import { cookies } from 'next/headers'
+import { LikeButton } from './_components/likeButton'
 
 export default async function ProjectDetailPage({
   params,
@@ -20,22 +15,41 @@ export default async function ProjectDetailPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
+  const cookieStore = await cookies()
+  const sessionId = cookieStore.get('sessionId')?.value
 
   const project = await prisma.project.findUnique({
-    where: {
-      id: id,
+    where: { id: id },
+    include: {
+      _count: {
+        select: { likes: true },
+      },
     },
   })
 
-  if (!project) {
-    notFound()
+  if (!project) notFound()
+
+  let userHasLiked = false
+
+  if (sessionId) {
+    const existingLike = await prisma.like.findUnique({
+      where: {
+        sessionId_projectId: {
+          sessionId: sessionId,
+          projectId: id,
+        },
+      },
+    })
+    userHasLiked = !!existingLike
   }
 
   const year = new Date(project.createdAt).getFullYear()
+  const totalLikes = project._count.likes
+
+  console.log('Project:', project)
 
   return (
     <div className="min-h-screen">
-      {/* Hero Banner */}
       <section className="relative">
         <div className="aspect-3/1 max-h-100 w-full overflow-hidden bg-zinc-900">
           {project.imageUrl ? (
@@ -85,9 +99,11 @@ export default async function ProjectDetailPage({
             <span className="flex items-center gap-1.5">
               <Eye className="h-4 w-4" /> 150
             </span>
-            <button className="flex items-center gap-1.5 transition-colors hover:text-red-400">
-              <Heart className="h-4 w-4" /> 24
-            </button>
+            <LikeButton
+              projectId={project.id}
+              initialLikes={totalLikes}
+              initialHasLiked={userHasLiked}
+            />
           </div>
           <div className="flex gap-2">
             {project.repoUrl && (
@@ -123,10 +139,8 @@ export default async function ProjectDetailPage({
         </div>
       </section>
 
-      {/* Content */}
       <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16">
-          {/* Descrição Principal */}
           <div className="lg:col-span-2 space-y-12">
             <div>
               <h2 className="text-xl font-semibold text-zinc-100 mb-4">
@@ -138,7 +152,6 @@ export default async function ProjectDetailPage({
             </div>
           </div>
 
-          {/* Sidebar */}
           <div className="space-y-6">
             <div className="rounded-xl border border-zinc-800/50 bg-zinc-900/30 p-6">
               <h3 className="text-sm font-medium text-zinc-300 mb-4">
