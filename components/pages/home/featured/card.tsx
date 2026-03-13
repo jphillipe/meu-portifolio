@@ -8,7 +8,6 @@ import { motion, useAnimation } from 'framer-motion'
 import { Project } from '@/lib/generated/prisma/client'
 
 export const ProjectCard = ({ project }: { project: Project }) => {
-  const totalViews = 0
   const totalLikes = 0
   const shineControls = useAnimation()
 
@@ -58,7 +57,7 @@ export const ProjectCard = ({ project }: { project: Project }) => {
 
           {/* Featured badge */}
           {project.featured && (
-            <div className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-white/10 backdrop-blur-md border border-white/10 text-[10px] font-medium text-white uppercase tracking-wider">
+            <div className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-zinc-900/80 backdrop-blur-md border border-white/10 text-[10px] font-medium text-white uppercase tracking-wider">
               Featured
             </div>
           )}
