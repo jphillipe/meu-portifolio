@@ -10,7 +10,6 @@ import { cookies } from 'next/headers'
 import { LikeButton } from './_components/likeButton'
 import { ViewTracker } from './_components/viewTracker'
 import { getTranslations } from 'next-intl/server'
-import { useLocale } from 'next-intl'
 
 export default async function ProjectDetailPage({
   params,
