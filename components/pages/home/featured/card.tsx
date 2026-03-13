@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { motion, useAnimation } from 'framer-motion'
 import { Project } from '@/lib/generated/prisma/client'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 export const ProjectCard = ({
   project,
@@ -17,6 +17,7 @@ export const ProjectCard = ({
 }) => {
   const t = useTranslations('Featured')
   const shineControls = useAnimation()
+  const locale = useLocale()
 
   const handleHoverStart = async () => {
     await shineControls.start({
@@ -25,6 +26,13 @@ export const ProjectCard = ({
     })
     shineControls.set({ x: '-100%' })
   }
+
+  const displayTitle =
+    locale === 'en' && project.titleEN ? project.titleEN : project.title
+  const displayDescription =
+    locale === 'en' && project.descriptionEN
+      ? project.descriptionEN
+      : project.description
 
   return (
     <Link href={`/projects/${project.id}`} className="group block">
@@ -74,7 +82,7 @@ export const ProjectCard = ({
         <div className="p-5">
           <div className="flex items-start justify-between gap-3 mb-2">
             <h3 className="font-semibold text-zinc-100 group-hover:text-white transition-colors">
-              {project.title}
+              {displayTitle}
             </h3>
             <span className="text-xs text-zinc-600 shrink-0 font-mono">
               {project.createdAt.getFullYear()}
@@ -82,7 +90,7 @@ export const ProjectCard = ({
           </div>
 
           <p className="text-sm text-zinc-400 leading-relaxed mb-4 line-clamp-2 group-hover:text-zinc-300 transition-colors">
-            {project.description}
+            {displayDescription}
           </p>
 
           {/* Tech Stack */}

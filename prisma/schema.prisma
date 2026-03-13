@@ -17,8 +17,10 @@ model User {
 model Project {
   id          String   @id @default(cuid())
   title       String
+  titleEN    String?
   category    String
   description String
+  descriptionEN String?
   imageUrl    String?  
   repoUrl     String?  
   liveUrl     String?  

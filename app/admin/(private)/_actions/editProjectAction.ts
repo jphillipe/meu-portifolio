@@ -9,9 +9,11 @@ import { zfd } from 'zod-form-data'
 const editProjectSchema = zfd.formData({
   id: zfd.text(z.string()),
   title: zfd.text(z.string().min(4, { message: 'Mínimo de 4 caracteres' })),
+  titleEN: zfd.text(z.string().optional()),
   description: zfd.text(
     z.string().min(4, { message: 'Mínimo de 4 caracteres' }),
   ),
+  descriptionEN: zfd.text(z.string().optional()),
   category: zfd.text(z.string().min(1, 'Categoria é obrigatória')),
   imageUrl: zfd.text(z.string().optional()),
   repoUrl: zfd.text(z.string().optional()),
@@ -34,7 +36,9 @@ export const editProjectAction = authActionClient
       where: { id: parsedInput.id },
       data: {
         title: parsedInput.title,
+        titleEN: parsedInput.titleEN,
         description: parsedInput.description,
+        descriptionEN: parsedInput.descriptionEN,
         category: parsedInput.category,
         imageUrl: parsedInput.imageUrl,
         repoUrl: parsedInput.repoUrl,

@@ -74,7 +74,7 @@
   },
   "Tech": {
     "eyebrow": "Tecnologias",
-    "title": "Stack tecnica"
+    "title": "Tech stack"
   },
   "Projects": {
     "title": "Projetos",
@@ -128,9 +128,11 @@
     "formEditTitle": "Editar projeto",
     "formNewTitle": "Novo projeto",
     "fieldTitle": "Titulo *",
+    "fieldTitleEN": "Titulo (EN) *",
     "fieldCategory": "Categoria",
     "fieldTags": "Tech stack",
     "fieldDescription": "Descricao",
+    "fieldDescriptionEN": "Descricao (EN)",
     "fieldRepo": "URL do GitHub",
     "fieldLive": "URL da demo",
     "fieldCover": "Capa do projeto (upload)",

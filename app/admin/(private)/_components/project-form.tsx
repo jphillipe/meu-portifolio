@@ -86,7 +86,7 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
         </h2>
         <Separator className="bg-zinc-800/50" />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <Label htmlFor="title">{t('fieldTitle')}</Label>
 
@@ -94,6 +94,21 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
               id="title"
               name="title"
               defaultValue={initialData?.title}
+              className={inputClass}
+            />
+            {result?.validationErrors?.title && (
+              <p className="text-xs text-red-500">
+                {result.validationErrors.title._errors}
+              </p>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="title">{t('fieldTitleEN')}</Label>
+
+            <Input
+              id="titleEN"
+              name="titleEN"
+              defaultValue={initialData?.titleEN ?? ''}
               className={inputClass}
             />
             {result?.validationErrors?.title && (
@@ -147,12 +162,26 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
           <Textarea
             id="description"
             name="description"
-            defaultValue={initialData?.description}
+            defaultValue={initialData?.description ?? ''}
             className={`${inputClass} min-h-30`}
           />
           {result?.validationErrors?.description && (
             <p className="text-xs text-red-500">
               {result.validationErrors.description._errors}
+            </p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="description">{t('fieldDescriptionEN')}</Label>
+          <Textarea
+            id="descriptionEN"
+            name="descriptionEN"
+            defaultValue={initialData?.descriptionEN ?? ''}
+            className={`${inputClass} min-h-30`}
+          />
+          {result?.validationErrors?.descriptionEN && (
+            <p className="text-xs text-red-500">
+              {result.validationErrors.descriptionEN._errors}
             </p>
           )}
         </div>
@@ -178,11 +207,9 @@ export function ProjectForm({ onSuccess, initialData }: ProjectFormProps) {
           </div>
         </div>
 
-        {/* --- MODIFICADO: ÁREA DO CLOUDINARY --- */}
         <div className="space-y-2">
           <Label>{t('fieldCover')}</Label>
 
-          {/* Input oculto que o Zod vai capturar no submit */}
           <input type="hidden" name="imageUrl" value={uploadedImage} />
 
           <div className="flex items-center gap-4">

@@ -10,6 +10,7 @@ import { cookies } from 'next/headers'
 import { LikeButton } from './_components/likeButton'
 import { ViewTracker } from './_components/viewTracker'
 import { getTranslations } from 'next-intl/server'
+import { useLocale } from 'next-intl'
 
 export default async function ProjectDetailPage({
   params,
@@ -20,6 +21,8 @@ export default async function ProjectDetailPage({
   const t = await getTranslations('ProjectDetail')
   const cookieStore = await cookies()
   const sessionId = cookieStore.get('sessionId')?.value
+
+  const locale = cookieStore.get('NEXT_LOCALE')?.value || 'en'
 
   const project = await prisma.project.findUnique({
     where: { id: id },
@@ -49,7 +52,12 @@ export default async function ProjectDetailPage({
   const year = new Date(project.createdAt).getFullYear()
   const totalLikes = project._count.likes
 
-  console.log('Project:', project)
+  const displayTitle =
+    locale === 'en' && project.titleEN ? project.titleEN : project.title
+  const displayDescription =
+    locale === 'en' && project.descriptionEN
+      ? project.descriptionEN
+      : project.description
 
   return (
     <div className="min-h-screen">
@@ -59,7 +67,7 @@ export default async function ProjectDetailPage({
           {project.imageUrl ? (
             <Image
               src={project.imageUrl}
-              alt={project.title}
+              alt={displayTitle}
               fill
               className="w-full h-full object-cover opacity-50"
             />
@@ -77,7 +85,7 @@ export default async function ProjectDetailPage({
               <ArrowLeft className="h-4 w-4" /> {t('back')}
             </Link>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-50 mb-3">
-              {project.title}
+              {displayTitle}
             </h1>
           </div>
         </div>
@@ -151,7 +159,7 @@ export default async function ProjectDetailPage({
                 {t('overview')}
               </h2>
               <p className="text-zinc-400 leading-relaxed whitespace-pre-wrap">
-                {project.description}
+                {displayDescription}
               </p>
             </div>
           </div>

@@ -12,10 +12,14 @@ const projectSchema = zfd.formData({
       .string({ message: 'Título é obrigatório' })
       .min(4, { message: 'Título deve ter no mínimo 4 caracteres' }),
   ),
+  titleEN: zfd.text(z.string({ message: 'Título é obrigatório' }).optional()),
   description: zfd.text(
     z
       .string({ message: 'Descrição é obrigatória' })
       .min(4, { message: 'Descrição deve ter no mínimo 4 caracteres' }),
+  ),
+  descriptionEN: zfd.text(
+    z.string({ message: 'Descrição é obrigatória' }).optional(),
   ),
   category: zfd.text(
     z
@@ -42,7 +46,9 @@ export const createProjectAction = authActionClient
     const newProject = await prisma.project.create({
       data: {
         title: parsedInput.title,
+        titleEN: parsedInput.titleEN,
         description: parsedInput.description,
+        descriptionEN: parsedInput.descriptionEN,
         category: parsedInput.category,
         imageUrl: parsedInput.imageUrl,
         repoUrl: parsedInput.repoUrl,
