@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { DashboardStats } from './_components/dashboardStats'
 import { ProjectsTabs } from './_components/projects-tabs'
 import { prisma } from '@/lib/prisma'
+import { logoutAction } from './_actions/logoutAction'
 
 export default async function AdminDashboardPage() {
   const dbProjects = await prisma.project.findMany({
@@ -30,13 +31,16 @@ export default async function AdminDashboardPage() {
               Gerencie os projetos do portfólio
             </p>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            className="border-zinc-700 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 gap-2"
-          >
-            <LogOut className="h-4 w-4" /> Sair
-          </Button>
+          <form action={logoutAction}>
+            <Button
+              type="submit"
+              variant="outline"
+              size="sm"
+              className="border-zinc-700 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 gap-2"
+            >
+              <LogOut className="h-4 w-4" /> Sair
+            </Button>
+          </form>
         </div>
 
         <DashboardStats
