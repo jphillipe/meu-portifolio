@@ -13,7 +13,7 @@
     "projectNotFoundDescription": "O projeto solicitado não foi encontrado no portfólio."
   },
   "Navbar": {
-    "home": "Inicio",
+    "home": "Início",
     "projects": "Projetos",
     "admin": "Admin",
     "adminDashboard": "Painel Admin",
@@ -23,8 +23,8 @@
   },
   "Footer": {
     "about": "{title} em {location}. Construindo software que gera impacto.",
-    "navigation": "Navegacao",
-    "home": "Inicio",
+    "navigation": "Navegação",
+    "home": "Início",
     "projects": "Projetos",
     "contact": "Contato",
     "connect": "Conecte-se",
@@ -32,43 +32,43 @@
   },
   "Hero": {
     "role": "Engenheiro Full Stack",
-    "tagline": "Construindo solucoes elegantes para problemas complexos",
-    "available": "Disponivel para novos projetos",
+    "tagline": "Construindo soluções elegantes para problemas complexos",
+    "available": "Disponível para novos projetos",
     "specializing": "Especializado em React, Node.js e arquitetura em nuvem.",
     "viewProjects": "Ver projetos",
     "getInTouch": "Entrar em contato"
   },
   "About": {
     "eyebrow": "Sobre",
-    "title": "Construo software que resolve problemas reais e encanta usuarios.",
-    "bio": "Engenheiro full stack apaixonado, com mais de 2 anos de experiencia na criacao de aplicacoes de alta performance. Sou especializado em React, Node.js e arquitetura em nuvem. Gosto de transformar ideias em realidade e estou sempre em busca de novas tecnologias.",
-    "yearsExperience": "Anos de experiencia",
-    "projectsCompleted": "Projetos concluidos",
+    "title": "Construo software que resolve problemas reais e encanta usuários.",
+    "bio": "Engenheiro full stack apaixonado, com mais de 2 anos de experiência na criação de aplicações de alta performance. Sou especializado em React, Node.js e arquitetura em nuvem. Gosto de transformar ideias em realidade e estou sempre em busca de novas tecnologias.",
+    "yearsExperience": "Anos de experiência",
+    "projectsCompleted": "Projetos concluídos",
     "technologiesUsed": "Tecnologias usadas"
   },
   "Experience": {
     "eyebrow": "Carreira",
-    "title": "Experiencia",
+    "title": "Experiência",
     "items": [
       {
         "title": "Desenvolvedor Front-End",
-        "company": "Blue - Plano de Saude",
+        "company": "Blue - Plano de Saúde",
         "period": "Jul/2024 - Atual",
         "description": [
-          "Desenvolvimento e manutencao de paineis administrativos e portais internos para gestao de propostas, contratos e documentos no setor de saude.",
-          "Implementacao de interfaces responsivas e escalaveis com React, Next.js, TypeScript e Tailwind CSS, melhorando performance e experiencia de uso.",
-          "Colaboracao em squads ageis com produto, design e back-end para entregar novas funcionalidades e garantir integracao eficiente com APIs.",
-          "Contribuicao ativa para qualidade de codigo por meio de boas praticas, refatoracao e consistencia arquitetural."
+          "Desenvolvimento e manutenção de painéis administrativos e portais internos para gestão de propostas, contratos e documentos no setor de saúde.",
+          "Implementação de interfaces responsivas e escaláveis com React, Next.js, TypeScript e Tailwind CSS, melhorando performance e experiência de uso.",
+          "Colaboração em squads ágeis com produto, design e back-end para entregar novas funcionalidades e garantir integração eficiente com APIs.",
+          "Contribuição ativa para qualidade de código por meio de boas práticas, refatoração e consistência arquitetural."
         ]
       },
       {
-        "title": "Diretor de Relacoes Externas e Gestor de Front-End",
-        "company": "TITAN - Empresa Junior de Engenharia da Computacao da UFBA",
+        "title": "Diretor de Relações Externas e Gestor de Front-End",
+        "company": "TITAN - Empresa Júnior de Engenharia da Computação da UFBA",
         "period": "Set/2023 - Atual",
         "description": [
-          "Lideranca de front-end no desenvolvimento de projetos web, como sites institucionais e landing pages para eventos.",
-          "Gestao de equipe e coordenacao de projetos, com atuacao como Presidente e Diretor de Relacoes Externas.",
-          "Representacao institucional com parceiros, departamentos da universidade e no Movimento Empresa Junior."
+          "Liderança de front-end no desenvolvimento de projetos web, como sites institucionais e landing pages para eventos.",
+          "Gestão de equipe e coordenação de projetos, com atuação como Presidente e Diretor de Relações Externas.",
+          "Representação institucional com parceiros, departamentos da universidade e no Movimento Empresa Júnior."
         ]
       }
     ]
@@ -78,7 +78,7 @@
     "title": "Projetos selecionados",
     "viewAll": "Ver todos",
     "featuredBadge": "Destaque",
-    "githubAria": "Repositorio no GitHub",
+    "githubAria": "Repositório no GitHub",
     "liveDemoAria": "Demo ao vivo"
   },
   "Tech": {
@@ -87,7 +87,7 @@
   },
   "Projects": {
     "title": "Projetos",
-    "subtitle": "Uma colecao de projetos que construo e aos quais contribuo.",
+    "subtitle": "Uma coleção de projetos que construo e aos quais contribuo.",
     "searchPlaceholder": "Buscar projetos, tecnologias...",
     "allCategory": "Todos",
     "count": "{count} projeto",
@@ -97,51 +97,51 @@
   "ProjectDetail": {
     "back": "Voltar",
     "liveDemo": "Demo ao vivo",
-    "overview": "Visao geral",
+    "overview": "Visão geral",
     "technologies": "Tecnologias"
   },
   "NotFound": {
-    "terminal": "pagina nao encontrada",
-    "description": "A pagina que voce procura nao existe ou foi movida para outro endereco.",
-    "backHome": "Voltar ao inicio"
+    "terminal": "página não encontrada",
+    "description": "A página que você procura não existe ou foi movida para outro endereço.",
+    "backHome": "Voltar ao início"
   },
   "Admin": {
     "title": "Painel Admin",
-    "subtitle": "Gerencie os projetos do portfolio",
+    "subtitle": "Gerencie os projetos do portfólio",
     "logout": "Sair",
     "statsProjects": "Total de projetos",
-    "statsViews": "Visualizacoes totais",
+    "statsViews": "Visualizações totais",
     "statsLikes": "Likes totais",
     "tabProjects": "Projetos",
     "tabNew": "Novo projeto",
     "tabEdit": "Editar projeto",
     "searchPlaceholder": "Buscar projetos...",
-    "emptyHint": "Seu painel esta pronto para receber o primeiro case.",
+    "emptyHint": "Seu painel está pronto para receber o primeiro case.",
     "newProject": "Novo projeto",
     "tableProject": "Projeto",
     "tableCategory": "Categoria",
     "tableYear": "Ano",
-    "tableActions": "Acoes",
+    "tableActions": "Ações",
     "noMatchesTerminal": "nenhum resultado encontrado",
     "noMatchesTitle": "Nenhum projeto combina com sua busca",
-    "noMatchesDescription": "Tente procurar por outro nome, categoria ou ano. O filtro esta ativo, mas nao encontrou nenhuma correspondencia para",
+    "noMatchesDescription": "Tente procurar por outro nome, categoria ou ano. O filtro está ativo, mas não encontrou nenhuma correspondência para",
     "clearSearch": "Limpar busca",
     "noProjectsTerminal": "nenhum projeto encontrado",
-    "noProjectsTitle": "Sua vitrine comeca aqui",
-    "noProjectsDescription": "Ainda nao existe nenhum projeto cadastrado. Crie o primeiro item para preencher o painel e refletir isso na pagina inicial.",
+    "noProjectsTitle": "Sua vitrine começa aqui",
+    "noProjectsDescription": "Ainda não existe nenhum projeto cadastrado. Crie o primeiro item para preencher o painel e refletir isso na página inicial.",
     "createFirst": "Criar primeiro projeto",
-    "deleteTitle": "Voce tem certeza?",
-    "deleteDescription": "Essa acao nao pode ser desfeita. Isso ira apagar permanentemente este projeto do seu portfolio.",
+    "deleteTitle": "Você tem certeza?",
+    "deleteDescription": "Essa ação não pode ser desfeita. Isso irá apagar permanentemente este projeto do seu portfólio.",
     "cancel": "Cancelar",
     "continue": "Continuar",
     "formEditTitle": "Editar projeto",
     "formNewTitle": "Novo projeto",
-    "fieldTitle": "Titulo *",
-    "fieldTitleEN": "Titulo (EN) *",
+    "fieldTitle": "Título *",
+    "fieldTitleEN": "Título (EN) *",
     "fieldCategory": "Categoria",
     "fieldTags": "Tech stack",
-    "fieldDescription": "Descricao",
-    "fieldDescriptionEN": "Descricao (EN)",
+    "fieldDescription": "Descrição",
+    "fieldDescriptionEN": "Descrição (EN)",
     "fieldRepo": "URL do GitHub",
     "fieldLive": "URL da demo",
     "fieldCover": "Capa do projeto (upload)",
@@ -151,7 +151,7 @@
     "replaceImage": "Trocar imagem",
     "uploadImage": "Fazer upload",
     "saving": "Salvando...",
-    "saveChanges": "Salvar alteracoes",
+    "saveChanges": "Salvar alterações",
     "createProject": "Criar projeto",
     "toastDeleting": "Apagando projeto...",
     "toastDeleteSuccess": "Projeto apagado com sucesso!",

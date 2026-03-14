@@ -3,14 +3,14 @@
     "siteName": "J.Phillipe",
     "authorName": "J. Phillipe",
     "siteTitle": "J.Phillipe | Full Stack Engineer",
-    "siteDescription": "J.Phillipe portfolio, a full stack engineer specialized in React, Next.js, Node.js, and cloud architecture.",
+    "siteDescription": "Portfolio of J.Phillipe, a full stack engineer specializing in React, Next.js, Node.js, and cloud architecture.",
     "keywords": "portfolio,full stack engineer,react developer,next.js,node.js,typescript,frontend,backend,cloud",
     "homeTitle": "Home",
-    "homeDescription": "Discover J.Phillipe's work, experience, and technology stack across high-performance web projects.",
+    "homeDescription": "Explore J.Phillipe's work, experience, and tech stack across high-performance web projects.",
     "projectsTitle": "Projects",
     "projectsDescription": "Browse projects built by J.Phillipe with a focus on performance, user experience, and software engineering best practices.",
-    "projectNotFoundTitle": "Project not found",
-    "projectNotFoundDescription": "The requested project was not found in the portfolio."
+    "projectNotFoundTitle": "Project Not Found",
+    "projectNotFoundDescription": "The requested project could not be found in the portfolio."
   },
   "Navbar": {
     "home": "Home",
@@ -41,8 +41,8 @@
   "About": {
     "eyebrow": "About",
     "title": "I build software that solves real problems and delights users.",
-    "bio": "Passionate full-stack engineer with 2+ years of experience crafting high-performance applications. I specialize in React, Node.js, and cloud architecture. I love turning ideas into reality and I am always eager to learn new technologies.",
-    "yearsExperience": "Years experience",
+    "bio": "Passionate full-stack engineer with over 2 years of experience crafting high-performance applications. I specialize in React, Node.js, and cloud architecture. I love turning ideas into reality and am always eager to master new technologies.",
+    "yearsExperience": "Years of experience",
     "projectsCompleted": "Projects completed",
     "technologiesUsed": "Technologies used"
   },
@@ -52,30 +52,30 @@
     "items": [
       {
         "title": "Front-End Developer",
-        "company": "Blue - Health Insurance",
-        "period": "Jul/2024 - Present",
+        "company": "Blue Saúde",
+        "period": "Jul 2024 - Present",
         "description": [
-          "Development and maintenance of administrative dashboards and internal portals for managing proposals, contracts, and documents in the health sector.",
-          "Implementation of responsive and scalable interfaces using React, Next.js, TypeScript, and Tailwind CSS, improving performance and user experience.",
-          "Collaboration in agile squads with product, design, and back-end teams to deliver new features and ensure efficient API integration.",
-          "Active contribution to code quality through best practices, refactoring, and architectural consistency."
+          "Developed and maintained administrative dashboards and internal portals for managing health insurance proposals, contracts, and documentation.",
+          "Implemented responsive and scalable interfaces using React, Next.js, TypeScript, and Tailwind CSS, significantly improving performance and UX.",
+          "Collaborated in agile squads alongside product, design, and back-end teams to deliver new features and ensure seamless API integration.",
+          "Actively contributed to code quality through best practices, refactoring, and architectural consistency."
         ]
       },
       {
-        "title": "External Relations Director and Front-End Manager",
+        "title": "External Relations Director & Front-End Manager",
         "company": "TITAN - UFBA Computer Engineering Junior Enterprise",
-        "period": "Sep/2023 - Present",
+        "period": "Sep 2023 - Present",
         "description": [
-          "Front-end leadership in web project development, including institutional websites and event landing pages.",
-          "Team leadership and project coordination, acting as President and External Relations Director.",
-          "Institutional representation with partners, university departments, and in the Junior Enterprise Movement."
+          "Led front-end development for web projects, including institutional websites and event landing pages.",
+          "Managed teams and coordinated projects while serving as President and External Relations Director.",
+          "Represented the institution before partners, university departments, and the Junior Enterprise Movement."
         ]
       }
     ]
   },
   "Featured": {
-    "eyebrow": "Featured work",
-    "title": "Selected projects",
+    "eyebrow": "Featured Work",
+    "title": "Selected Projects",
     "viewAll": "View all",
     "featuredBadge": "Featured",
     "githubAria": "GitHub repository",
@@ -83,11 +83,11 @@
   },
   "Tech": {
     "eyebrow": "Technologies",
-    "title": "Tech stack"
+    "title": "Tech Stack"
   },
   "Projects": {
     "title": "Projects",
-    "subtitle": "A collection of projects I built and contributed to.",
+    "subtitle": "A collection of projects I've built and contributed to.",
     "searchPlaceholder": "Search projects, technologies...",
     "allCategory": "All",
     "count": "{count} project",
@@ -96,7 +96,7 @@
   },
   "ProjectDetail": {
     "back": "Back",
-    "liveDemo": "Live demo",
+    "liveDemo": "Live Demo",
     "overview": "Overview",
     "technologies": "Technologies"
   },
@@ -116,7 +116,7 @@
     "tabNew": "New project",
     "tabEdit": "Edit project",
     "searchPlaceholder": "Search projects...",
-    "emptyHint": "Your dashboard is ready for the first case study.",
+    "emptyHint": "Your dashboard is ready for your first case study.",
     "newProject": "New project",
     "tableProject": "Project",
     "tableCategory": "Category",
@@ -128,7 +128,7 @@
     "clearSearch": "Clear search",
     "noProjectsTerminal": "no projects found",
     "noProjectsTitle": "Your showcase starts here",
-    "noProjectsDescription": "There are no projects yet. Create your first item to populate the dashboard and reflect it on the home page.",
+    "noProjectsDescription": "There are no projects yet. Create your first item to populate the dashboard and update the home page.",
     "createFirst": "Create first project",
     "deleteTitle": "Are you sure?",
     "deleteDescription": "This action cannot be undone. It will permanently delete this project from your portfolio.",
@@ -143,7 +143,7 @@
     "fieldDescription": "Description",
     "fieldDescriptionEN": "Description (EN)",
     "fieldRepo": "GitHub URL",
-    "fieldLive": "Live demo URL",
+    "fieldLive": "Live Demo URL",
     "fieldCover": "Project cover (upload)",
     "fieldFeatured": "Featured project",
     "selectPlaceholder": "Select...",
@@ -161,7 +161,7 @@
     "toastUpdateSuccess": "Updated successfully!",
     "toastCreateSuccess": "Created successfully!",
     "toastSaveError": "Error saving data.",
-    "loginTitle": "Restricted access",
+    "loginTitle": "Restricted Access",
     "loginSubtitle": "Sign in with your admin email",
     "email": "Email",
     "password": "Password",

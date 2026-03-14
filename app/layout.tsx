@@ -7,7 +7,12 @@ import { Toaster } from '@/components/ui/sonner'
 import { TitanConsoleEgg } from '@/components/easter-egg/TitanConsoleEgg'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages, getTranslations } from 'next-intl/server'
-import { absoluteUrl, getBrandIconUrl, getSiteUrl, mapOgLocale } from '@/lib/seo'
+import {
+  absoluteUrl,
+  getBrandIconUrl,
+  getSiteUrl,
+  mapOgLocale,
+} from '@/lib/seo'
 
 const inter = Inter({
   variable: '--font-inter',
