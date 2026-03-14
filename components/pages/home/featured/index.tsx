@@ -5,6 +5,11 @@ import { ProjectCard } from './card'
 import { motion } from 'framer-motion'
 import { Project } from '@/lib/generated/prisma/client'
 import { useTranslations } from 'next-intl'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@/components/ui/carousel'
 
 export type ProjectWithCounts = Project & {
   _count: {
@@ -40,7 +45,41 @@ export const Featured = ({ projects }: { projects: ProjectWithCounts[] }) => {
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <motion.div
+          className="md:hidden"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
+          <Carousel
+            opts={{
+              align: 'center',
+              loop: true,
+              containScroll: 'keepSnaps',
+              startIndex: 1,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2">
+              {featuredProjects.map((project) => (
+                <CarouselItem
+                  key={project.id}
+                  className="basis-[82%] pl-2 flex"
+                >
+                  <div className="w-full h-full [&>a]:h-full [&>a>div]:h-full">
+                    <ProjectCard
+                      project={project}
+                      totalLikes={project._count.likes}
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </motion.div>
+
+        <div className="hidden md:grid md:grid-cols-2 gap-6">
           {featuredProjects.map((project, index) => (
             <motion.div
               key={project.id}

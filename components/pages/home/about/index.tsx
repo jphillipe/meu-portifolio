@@ -18,6 +18,11 @@ import {
 } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@/components/ui/carousel'
 
 const AnimatedCounter = ({
   target,
@@ -112,32 +117,76 @@ export const About = () => {
             </div>
           </motion.div>
 
-          <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4">
-            {stats.map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{
-                  duration: 0.5,
-                  delay: i * 0.15,
-                  ease: 'easeOut',
+          <div className="lg:col-span-2">
+            <motion.div
+              className="lg:hidden"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+            >
+              <Carousel
+                opts={{
+                  align: 'center',
+                  loop: true,
+                  containScroll: 'keepSnaps',
+                  startIndex: 1,
                 }}
+                className="w-full"
               >
-                <div className="p-5 rounded-xl border border-zinc-800/50 bg-zinc-900/30 hover:border-zinc-700/50 hover:bg-zinc-800/20 transition-all duration-300 group">
-                  <stat.icon className="h-5 w-5 text-zinc-500 mb-3 group-hover:text-blue-400/70 transition-colors" />
-                  <div className="text-2xl font-bold text-zinc-100">
-                    <AnimatedCounter
-                      target={stat.value}
-                      suffix={stat.suffix}
-                      locale={locale}
-                    />
+                <CarouselContent className="-ml-2">
+                  {stats.map((stat, i) => (
+                    <CarouselItem key={i} className="basis-[82%] pl-2">
+                      <div>
+                        <div className="p-5 rounded-xl border border-zinc-800/50 bg-zinc-900/30 hover:border-zinc-700/50 hover:bg-zinc-800/20 transition-all duration-300 group">
+                          <stat.icon className="h-5 w-5 text-zinc-500 mb-3 group-hover:text-blue-400/70 transition-colors" />
+                          <div className="text-2xl font-bold text-zinc-100">
+                            <AnimatedCounter
+                              target={stat.value}
+                              suffix={stat.suffix}
+                              locale={locale}
+                            />
+                          </div>
+                          <div className="text-xs text-zinc-500 mt-1">
+                            {stat.label}
+                          </div>
+                        </div>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </motion.div>
+
+            <div className="hidden lg:grid lg:grid-cols-1 gap-4">
+              {stats.map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: i * 0.15,
+                    ease: 'easeOut',
+                  }}
+                >
+                  <div className="p-5 rounded-xl border border-zinc-800/50 bg-zinc-900/30 hover:border-zinc-700/50 hover:bg-zinc-800/20 transition-all duration-300 group">
+                    <stat.icon className="h-5 w-5 text-zinc-500 mb-3 group-hover:text-blue-400/70 transition-colors" />
+                    <div className="text-2xl font-bold text-zinc-100">
+                      <AnimatedCounter
+                        target={stat.value}
+                        suffix={stat.suffix}
+                        locale={locale}
+                      />
+                    </div>
+                    <div className="text-xs text-zinc-500 mt-1">
+                      {stat.label}
+                    </div>
                   </div>
-                  <div className="text-xs text-zinc-500 mt-1">{stat.label}</div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

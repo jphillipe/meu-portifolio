@@ -137,6 +137,7 @@ export default async function ProjectDetailPage({
   return (
     <div className="min-h-screen">
       <ViewTracker projectId={id} />
+
       <section className="relative">
         <div className="aspect-3/1 max-h-100 w-full overflow-hidden bg-zinc-900">
           {project.imageUrl ? (
@@ -155,7 +156,7 @@ export default async function ProjectDetailPage({
           <div className="max-w-6xl mx-auto">
             <Link
               href="/projects"
-              className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-zinc-200 transition-colors mb-4"
+              className="mb-4 inline-flex items-center gap-2 rounded-md border border-zinc-700/70 bg-zinc-950/70 px-3 py-1.5 text-sm text-zinc-300 backdrop-blur-sm transition-colors hover:border-zinc-500/80 hover:text-zinc-100"
             >
               <ArrowLeft className="h-4 w-4" /> {t('back')}
             </Link>

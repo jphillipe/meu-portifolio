@@ -1,6 +1,12 @@
 'use client'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 
 type ExperienceItem = {
   title: string
@@ -32,7 +38,7 @@ export const Experience = () => {
             </p>
           </motion.div>
           <div className="lg:col-span-3">
-            <div className="relative">
+            <Accordion type="multiple" className="relative">
               {/* Timeline line with gradient */}
               <div className="absolute left-1.25 top-2 bottom-0 w-px bg-linear-to-b from-blue-500/30 via-zinc-800 to-zinc-800/0" />
 
@@ -54,29 +60,41 @@ export const Experience = () => {
                     <div className="w-2.75 h-2.75 rounded-full border-2 border-zinc-700 bg-zinc-950 group-hover:border-blue-400 group-hover:shadow-[0_0_8px_rgba(96,165,250,0.3)] transition-all duration-300" />
                   </div>
 
-                  <div className="text-xs text-zinc-500 mb-1.5 font-mono tracking-wide">
-                    {exp.period}
-                  </div>
-                  <h3 className="text-[15px] font-semibold text-zinc-100 group-hover:text-white transition-colors">
-                    {exp.title}
-                  </h3>
-                  <div className="text-sm text-blue-400/80 mb-3">
-                    {exp.company}
-                  </div>
-                  <ul className="space-y-2">
-                    {exp.description.map((bullet, i) => (
-                      <li
-                        key={i}
-                        className="flex gap-2.5 text-[13px] text-zinc-500 leading-relaxed group-hover:text-zinc-400 transition-colors"
-                      >
-                        <span className="mt-1.75 shrink-0 w-1 h-1 rounded-full bg-zinc-700 group-hover:bg-blue-400/50 transition-colors" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <AccordionItem
+                    value={`experience-${index}`}
+                    className="border-none"
+                  >
+                    <AccordionTrigger className="py-0 hover:no-underline **:data-[slot=accordion-trigger-icon]:text-zinc-600 **:data-[slot=accordion-trigger-icon]:size-3.5">
+                      <div>
+                        <div className="text-xs text-zinc-500 mb-1.5 font-mono tracking-wide">
+                          {exp.period}
+                        </div>
+                        <h3 className="text-[15px] font-semibold text-zinc-100 group-hover:text-white transition-colors">
+                          {exp.title}
+                        </h3>
+                        <div className="text-sm text-blue-400/80">
+                          {exp.company}
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+
+                    <AccordionContent className="pt-3 pb-0">
+                      <ul className="space-y-2">
+                        {exp.description.map((bullet, i) => (
+                          <li
+                            key={i}
+                            className="flex gap-2.5 text-[13px] text-zinc-500 leading-relaxed group-hover:text-zinc-400 transition-colors"
+                          >
+                            <span className="mt-1.75 shrink-0 w-1 h-1 rounded-full bg-zinc-700 group-hover:bg-blue-400/50 transition-colors" />
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
                 </motion.div>
               ))}
-            </div>
+            </Accordion>
           </div>
         </div>
       </div>
