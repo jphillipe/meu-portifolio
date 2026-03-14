@@ -154,12 +154,6 @@ export default async function ProjectDetailPage({
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-6">
           <div className="max-w-6xl mx-auto">
-            <Link
-              href="/projects"
-              className="mb-4 inline-flex items-center gap-2 rounded-md border border-zinc-700/70 bg-zinc-950/70 px-3 py-1.5 text-sm text-zinc-300 backdrop-blur-sm transition-colors hover:border-zinc-500/80 hover:text-zinc-100"
-            >
-              <ArrowLeft className="h-4 w-4" /> {t('back')}
-            </Link>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-50 mb-3">
               {displayTitle}
             </h1>
@@ -230,6 +224,12 @@ export default async function ProjectDetailPage({
       <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16">
           <div className="lg:col-span-2 space-y-12">
+            <Link
+              href="/projects"
+              className="mb-4 inline-flex items-center gap-2 rounded-md border border-zinc-700/70 bg-zinc-950/70 px-3 py-1.5 text-sm text-zinc-300 backdrop-blur-sm transition-colors hover:border-zinc-500/80 hover:text-zinc-100"
+            >
+              <ArrowLeft className="h-4 w-4" /> {t('back')}
+            </Link>
             <div>
               <h2 className="text-xl font-semibold text-zinc-100 mb-4">
                 {t('overview')}
