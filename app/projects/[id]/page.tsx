@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { Link } from '@/i18n/navigation'
 import { ArrowLeft, Github, ExternalLink, Calendar, Eye } from 'lucide-react'
@@ -9,7 +10,82 @@ import Image from 'next/image'
 import { cookies } from 'next/headers'
 import { LikeButton } from './_components/likeButton'
 import { ViewTracker } from './_components/viewTracker'
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
+import { absoluteUrl, resolveImageUrl, summarize } from '@/lib/seo'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}): Promise<Metadata> {
+  const { id } = await params
+  const locale = await getLocale()
+  const t = await getTranslations('Meta')
+
+  const project = await prisma.project.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      title: true,
+      titleEN: true,
+      description: true,
+      descriptionEN: true,
+      imageUrl: true,
+      tags: true,
+    },
+  })
+
+  if (!project) {
+    return {
+      title: t('projectNotFoundTitle'),
+      description: t('projectNotFoundDescription'),
+      robots: {
+        index: false,
+        follow: false,
+      },
+    }
+  }
+
+  const displayTitle =
+    locale === 'en' && project.titleEN ? project.titleEN : project.title
+  const displayDescription =
+    locale === 'en' && project.descriptionEN
+      ? project.descriptionEN
+      : project.description
+
+  const canonicalPath = `/projects/${encodeURIComponent(project.id)}`
+  const seoDescription = summarize(displayDescription, 160)
+  const imageUrl = resolveImageUrl(project.imageUrl)
+
+  return {
+    title: displayTitle,
+    description: seoDescription,
+    keywords: project.tags,
+    alternates: {
+      canonical: canonicalPath,
+    },
+    openGraph: {
+      type: 'article',
+      title: displayTitle,
+      description: seoDescription,
+      url: absoluteUrl(canonicalPath),
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: displayTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: displayTitle,
+      description: seoDescription,
+      images: [imageUrl],
+    },
+  }
+}
 
 export default async function ProjectDetailPage({
   params,

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { LayoutDashboard, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { DashboardStats } from './_components/dashboardStats'
@@ -5,6 +6,13 @@ import { ProjectsTabs } from './_components/projects-tabs'
 import { prisma } from '@/lib/prisma'
 import { logoutAction } from './_actions/logoutAction'
 import { getTranslations } from 'next-intl/server'
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+}
 
 export default async function AdminDashboardPage() {
   const t = await getTranslations('Admin')

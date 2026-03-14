@@ -1,7 +1,16 @@
 {
   "Meta": {
+    "siteName": "J.Phillipe",
+    "authorName": "J. Phillipe",
     "siteTitle": "J.Phillipe | Engenheiro Full Stack",
-    "siteDescription": "Portfolio de J.Phillipe"
+    "siteDescription": "Portfólio de J.Phillipe, engenheiro full stack especializado em React, Next.js, Node.js e arquitetura em nuvem.",
+    "keywords": "portfolio,engenheiro full stack,desenvolvedor react,next.js,node.js,typescript,frontend,backend,cloud",
+    "homeTitle": "Início",
+    "homeDescription": "Conheça o trabalho, experiência e tecnologias de J.Phillipe em projetos web de alta performance.",
+    "projectsTitle": "Projetos",
+    "projectsDescription": "Explore projetos desenvolvidos por J.Phillipe, com foco em performance, experiência do usuário e boas práticas de engenharia.",
+    "projectNotFoundTitle": "Projeto não encontrado",
+    "projectNotFoundDescription": "O projeto solicitado não foi encontrado no portfólio."
   },
   "Navbar": {
     "home": "Inicio",

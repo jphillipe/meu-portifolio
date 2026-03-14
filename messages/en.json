@@ -1,7 +1,16 @@
 {
   "Meta": {
+    "siteName": "J.Phillipe",
+    "authorName": "J. Phillipe",
     "siteTitle": "J.Phillipe | Full Stack Engineer",
-    "siteDescription": "J.Phillipe portfolio"
+    "siteDescription": "J.Phillipe portfolio, a full stack engineer specialized in React, Next.js, Node.js, and cloud architecture.",
+    "keywords": "portfolio,full stack engineer,react developer,next.js,node.js,typescript,frontend,backend,cloud",
+    "homeTitle": "Home",
+    "homeDescription": "Discover J.Phillipe's work, experience, and technology stack across high-performance web projects.",
+    "projectsTitle": "Projects",
+    "projectsDescription": "Browse projects built by J.Phillipe with a focus on performance, user experience, and software engineering best practices.",
+    "projectNotFoundTitle": "Project not found",
+    "projectNotFoundDescription": "The requested project was not found in the portfolio."
   },
   "Navbar": {
     "home": "Home",
@@ -132,7 +141,7 @@
     "fieldCategory": "Category",
     "fieldTags": "Tech stack",
     "fieldDescription": "Description",
-    "fieldDescriptionEN": "Description (EN)",   
+    "fieldDescriptionEN": "Description (EN)",
     "fieldRepo": "GitHub URL",
     "fieldLive": "Live demo URL",
     "fieldCover": "Project cover (upload)",
