@@ -27,7 +27,7 @@ export const developerProfile: DeveloperProfile = {
   bio: 'Passionate full-stack engineer with 2+ years of experience crafting high-performance applications. I specialize in React, Node.js, and cloud architecture. I love turning ideas into reality and am always eager to learn new technologies.',
   location: 'Salvador, BA, Brazil',
   email: 'fernandesjoaophillipe@gmail.com',
-  yearsOfExperience: 1,
+  yearsOfExperience: 2,
   projectsCompleted: 15,
   githubContributions: 7,
   socialLinks: {
